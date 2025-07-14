@@ -1,4 +1,10 @@
-import "modern-normalize"
-import "./css/reset.css"
+import "modern-normalize";
+import "./css/reset.css";
 
-console.log("Hello World")
+import app from "./modules/app";
+
+// import "./modules/project"
+// import "./modules/storage"
+
+import "./modules/sandbox"
+import "./modules/task"

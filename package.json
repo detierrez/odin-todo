@@ -23,6 +23,7 @@
   },
   "description": "",
   "dependencies": {
+    "date-fns": "^4.1.0",
     "modern-normalize": "^3.0.1"
   }
 }
