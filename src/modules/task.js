@@ -1,34 +1,24 @@
 import PubSub from "./pubsub";
 
 export class Task {
-  instances = {};
+  static tasks = {};
 
-  static publish = PubSub.subscribe(this);
+  static getTask(id) {
+    return this.tasks[id]
+  }
 
   static add(task) {
-    this.instances[task.uuid] = this;
-    this.publish({ method: "create", object: task });
+    this.tasks[task.id] = task;
   }
 
-  static update(task) {
-    delete this.instances[task.uuid];
-    this.publish({ method: "update", object: task });
-  }
-
-  static delete(task) {
-    delete this.instances[task.uuid];
-    this.publish({ method: "delete", object: task });
-  }
-
-  constructor({ title, description, dueDate, priority, userProject, uuid }) {
+  constructor({ title, description, dueDate, priority, userProject, isCompleted, id }) {
     this.title = title;
     this.description = description;
     this.dueDate = new Date(dueDate);
     this.priority = priority;
     this.userProject = userProject;
-    this.isCompleted = false;
-    this.uuid = uuid ? uuid : crypto.randomUUID();
-    this.projects = [];
+    this.isCompleted = isCompleted;
+    this.id = id || crypto.randomUUID();
 
     Task.add(this);
   }
@@ -39,7 +29,7 @@ export class Task {
 
   toJSON(key) {
     if (key) {
-      return this.uuid;
+      return this.id;
     }
     return { className: this.constructor.name, parameters: { ...this } };
   }

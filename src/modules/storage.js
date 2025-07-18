@@ -11,12 +11,12 @@ if (localStorage.length === 0) {
 
 const items = loadItems();
 console.log(items);
-console.log(Task.instances);
+console.log(Task.tasks);
 
 function saveDemoItems() {
   const tasks = initialData.map((task) => new Task(task));
   for (const task of tasks) {
-    localStorage.setItem(task.uuid, JSON.stringify(task));
+    localStorage.setItem(task.id, JSON.stringify(task));
   }
 }
 
@@ -26,16 +26,16 @@ function loadItems() {
     Project: Project,
   };
   const storedItems = { ...localStorage };
-  for (const uuid in storedItems) {
-    const { className, parameters } = JSON.parse(storedItems[uuid]);
+  for (const id in storedItems) {
+    const { className, parameters } = JSON.parse(storedItems[id]);
     const instance = new storedClasses[className](parameters);
-    storedItems[uuid] = instance;
+    storedItems[id] = instance;
   }
   return storedItems;
 }
 
 // for (const task of tasks) {
-//   const restored = stored[task.uuid];
+//   const restored = stored[task.id];
 //   console.log(restored);
 //   for (const key in task) {
 //     if (key === "dueDate") {

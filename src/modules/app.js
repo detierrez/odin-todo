@@ -3,10 +3,10 @@ function createTask({data}) {
 
 }
 
-function editTask(uuid, {data}) {
+function editTask(id, {data}) {
 
 }
 
-function deleteTask(uuid) {
+function deleteTask(id) {
   
 }

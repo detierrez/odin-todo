@@ -8,12 +8,25 @@ import {
   startOfTomorrow,
 } from "date-fns";
 
+import { Task } from "./task";
+
 export class Project {
-  constructor(title, description) {
+  static instances = {};
+
+  static add(project) {
+    this.instances[project.id] = project;
+  }
+
+  constructor({ title, description, id }) {
     this.title = title;
     this.description = description;
-    this.uuid = crypto.randomUUID();
-    this.tasks = [];
+    this.id = id || crypto.randomUUID();
+
+    Project.add(this);
+  }
+
+  get tasks() {
+    return Object.values(Task.tasks);
   }
 
   get totalCompleted() {
@@ -32,38 +45,38 @@ export class Project {
     return count;
   }
 
-  removeTask(uuid) {
-    delete this.tasks[uuid];
+  removeTask(task) {
+    delete this.tasks[task.id];
   }
 
   addTask(task) {
     if (this.filterRule(task)) {
-      this.tasks.push(task);
+      this.tasks[task.id] = task;
     }
-  }
-
-  filterRule(task) {
-    return true;
   }
 }
 
 export class UserProject extends Project {
-  constructor(title, description) {
-    super(title, description);
+  constructor({ title, description, id, ownedTasksIds }) {
+    super({ title, description, id });
+    console.log({ title, description, id, ownedTasksIds})
+    this.ownedTasksIds = ownedTasksIds;
   }
 
-  filterRule(task) {
-    return task.userProject === this.title;
+  get tasks() {
+    return this.ownedTasksIds.map((id) => Task.tasks[id]);
   }
 }
 
 export class TimeProject extends Project {
-  constructor(title, description) {
-    super(title, description);
+  constructor(title, description, id) {
+    super(title, description, id);
   }
 
-  filterRule(task) {
-    return isWithinInterval(task.dueDate, this.timeInterval);
+  get tasks() {
+    return Object.values(Task.tasks).filter((task) =>
+      isWithinInterval(task.dueDate, this.timeInterval)
+    );
   }
 
   get timeInterval() {
@@ -72,8 +85,12 @@ export class TimeProject extends Project {
 }
 
 export class TodayProject extends TimeProject {
-  constructor(title, description) {
-    super(title, description);
+  constructor({
+    title = "Today",
+    description = "Everything due today",
+    id = "today",
+  }) {
+    super(title, description, id);
   }
 
   get timeInterval() {
@@ -85,8 +102,12 @@ export class TodayProject extends TimeProject {
 }
 
 export class TomorrowProject extends TimeProject {
-  constructor(title, description) {
-    super(title, description);
+  constructor({
+    title = "Tomorrow",
+    description = "To do tomorrow",
+    id = "tomorrow",
+  }) {
+    super(title, description, id);
   }
 
   get timeInterval() {
@@ -98,8 +119,12 @@ export class TomorrowProject extends TimeProject {
 }
 
 export class WeekProject extends TimeProject {
-  constructor(title, description) {
-    super(title, description);
+  constructor({
+    title = "This Week",
+    description = "What's to be done this week",
+    id = "thisweek",
+  }) {
+    super(title, description, id);
   }
 
   get timeInterval() {

@@ -7,7 +7,7 @@
 //     this.partners.push(person);
 //   }
 
-import initialData from "./initialData";
+// import initialData from "./initialData";
 
 //   toJSON(key) {
 //     if (key) {
@@ -33,4 +33,35 @@ import initialData from "./initialData";
 
 console.log("Before");
 
+class Gen1 {
+  static instances = [];
 
+  static add(instance) {
+    this.instances.push(instance);
+  }
+
+  constructor() {
+    this.id = crypto.randomUUID();
+    Gen1.add(this)
+  }
+
+  register() {
+    this.constructor.add(this);
+  }
+}
+
+class Gen2 extends Gen1 {
+  static instances = [];
+
+  constructor() {
+    super();
+
+    Gen2.add(this)
+  }
+}
+
+const gen1Instance = new Gen1();
+const gen2Instance = new Gen2();
+
+console.log("Gen1 instances:", Gen1.instances);
+console.log("Gen2 instances:", Gen2.instances);

@@ -4,7 +4,7 @@ export class Project {
   constructor(title, description) {
     this.title = title;
     this.description = description;
-    this.uuid = crypto.randomUUID();
+    this.id = crypto.randomUUID();
     this.tasks = [];
   }
 
