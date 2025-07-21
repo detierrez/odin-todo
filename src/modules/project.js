@@ -10,11 +10,19 @@ import {
 
 import { Task } from "./task";
 
-export class Project {
+export class Collection {
   static instances = {};
 
   static add(project) {
     this.instances[project.id] = project;
+  }
+
+  static get projects() {
+    return Object.values(this.instances);
+  }
+
+  static getProject(id) {
+    return this.instances[id];
   }
 
   constructor({ title, description, id }) {
@@ -22,11 +30,11 @@ export class Project {
     this.description = description;
     this.id = id || crypto.randomUUID();
 
-    Project.add(this);
+    Collection.add(this);
   }
 
   get tasks() {
-    return Object.values(Task.tasks);
+    return Object.values(Task.tasksById);
   }
 
   get totalCompleted() {
@@ -44,37 +52,54 @@ export class Project {
     }
     return count;
   }
-
-  removeTask(task) {
-    delete this.tasks[task.id];
-  }
-
-  addTask(task) {
-    if (this.filterRule(task)) {
-      this.tasks[task.id] = task;
-    }
-  }
 }
 
-export class UserProject extends Project {
+export class Project extends Collection {
   constructor({ title, description, id, ownedTasksIds }) {
     super({ title, description, id });
-    console.log({ title, description, id, ownedTasksIds})
-    this.ownedTasksIds = ownedTasksIds;
+
+    this.tasksById = {};
+    for (const id of ownedTasksIds) {
+      const task = Task.getTask(id);
+      this.addTask(task);
+    }
   }
 
   get tasks() {
-    return this.ownedTasksIds.map((id) => Task.tasks[id]);
+    return Object.values(this.tasksById);
+  }
+
+  removeTask(task) {
+    delete this.tasksById[task.id];
+  }
+
+  addTask(task) {
+    if (task.id in this.tasksById) {
+      return;
+    }
+    this.tasksById[task.id] = task;
+    task.setProject(this);
+  }
+
+  toJSON(key) {
+    const parameters = {
+      title: this.title,
+      description: this.description,
+      id: this.id,
+      ownedTasksIds: this.tasks.map((task) => task.id),
+    };
+    // return { className: this.constructor.name, parameters: { ...this } };
+    return { className: this.constructor.name, parameters };
   }
 }
 
-export class TimeProject extends Project {
+export class TimeCollection extends Collection {
   constructor(title, description, id) {
     super(title, description, id);
   }
 
-  get tasks() {
-    return Object.values(Task.tasks).filter((task) =>
+  get tasksById() {
+    return Object.values(Task.tasksById).filter((task) =>
       isWithinInterval(task.dueDate, this.timeInterval)
     );
   }
@@ -84,7 +109,7 @@ export class TimeProject extends Project {
   }
 }
 
-export class TodayProject extends TimeProject {
+export class TodayCollection extends TimeCollection {
   constructor({
     title = "Today",
     description = "Everything due today",
@@ -101,7 +126,7 @@ export class TodayProject extends TimeProject {
   }
 }
 
-export class TomorrowProject extends TimeProject {
+export class TomorrowCollection extends TimeCollection {
   constructor({
     title = "Tomorrow",
     description = "To do tomorrow",
@@ -118,7 +143,7 @@ export class TomorrowProject extends TimeProject {
   }
 }
 
-export class WeekProject extends TimeProject {
+export class WeekCollection extends TimeCollection {
   constructor({
     title = "This Week",
     description = "What's to be done this week",
@@ -136,26 +161,3 @@ export class WeekProject extends TimeProject {
     };
   }
 }
-
-// const today = startOfToday();
-// const nextWeek = addWeeks(today, 1);
-// console.table({ today, nextWeek });
-
-// const todayProject = new TodayProject("Today", "Tasks due today");
-// const tomorrowProject = new TomorrowProject("Tomorrow", "Tasks due tomorrow");
-// const weekProject = new WeekProject("This Week", "Tasks due this week");
-
-// const todayTask = { dueDate: new Date() };
-// const tomorrowTask = { dueDate: addDays(new Date(), 1) };
-
-// todayProject.addTask(todayTask);
-// tomorrowProject.addTask(todayTask);
-// weekProject.addTask(todayTask);
-
-// todayProject.addTask(tomorrowTask);
-// tomorrowProject.addTask(tomorrowTask);
-// weekProject.addTask(tomorrowTask);
-
-// console.log("TodayProject tasks:", todayProject.tasks);
-// console.log("TomorrowProject tasks:", tomorrowProject.tasks);
-// console.log("WeekProject tasks:", weekProject.tasks);

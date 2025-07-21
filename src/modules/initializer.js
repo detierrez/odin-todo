@@ -1,23 +1,21 @@
 import { Task } from "./task";
-import { UserProject, Project } from "./project";
-import loadItemsByClass from "./dataLoader";
+import { Project, Collection } from "./project";
 
-const storedClasses = [Task, UserProject];
+const storedClasses = [Task, Project];
 
-const itemsByClass = loadItemsByClass(storedClasses);
-
+const itemsByClass = {};
 for (const _class of storedClasses) {
-  const itemArguments = Object.values(itemsByClass[_class.name]);
-  for (const args of itemArguments) {
-    new _class(args);
-  }
+  itemsByClass[_class.name] = [];
 }
 
-for (const id in Project.instances) {
-  const instance = Project.instances[id];
-  console.log({
-    instance,
-    completed: instance.totalCompleted,
-    tasks: instance.tasks,
-  });
+const storedItems = Object.values({ ...localStorage });
+for (const item of storedItems) {
+  const { className, itemArguments } = JSON.parse(item);
+  itemsByClass[className].push(itemArguments);
+}
+
+for (const _class of storedClasses) {
+  for (const itemArguments of itemsByClass[_class.name]) {
+    new _class(itemArguments);
+  }
 }

@@ -8,10 +8,10 @@ if (localStorage.length === 0) {
 
 function setDemoData() {
   for (const className in demoData) {
-    for (const item of demoData[className]) {
+    for (const itemArguments of demoData[className]) {
       localStorage.setItem(
-        item.id,
-        JSON.stringify({ className, item })
+        itemArguments.id,
+        JSON.stringify({ className, itemArguments })
       );
     }
   }

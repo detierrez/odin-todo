@@ -1,3 +1,4 @@
+console.log("/// Sandbox Start ///")
 // class Person {
 //   constructor(name) {
 //     this.name = name;
@@ -6,6 +7,8 @@
 //   addPartner(person) {
 //     this.partners.push(person);
 //   }
+
+import { tr } from "date-fns/locale";
 
 // import initialData from "./initialData";
 
@@ -33,35 +36,53 @@
 
 console.log("Before");
 
-class Gen1 {
-  static instances = [];
+// class Gen1 {
+//   static instances = [];
 
-  static add(instance) {
-    this.instances.push(instance);
-  }
+//   static add(instance) {
+//     this.instances.push(instance);
+//   }
 
-  constructor() {
-    this.id = crypto.randomUUID();
-    Gen1.add(this)
-  }
+//   constructor() {
+//     this.id = crypto.randomUUID();
+//     Gen1.add(this)
+//   }
 
-  register() {
-    this.constructor.add(this);
-  }
-}
+//   register() {
+//     this.constructor.add(this);
+//   }
+// }
 
-class Gen2 extends Gen1 {
-  static instances = [];
+// class Gen2 extends Gen1 {
+//   static instances = [];
 
-  constructor() {
-    super();
+//   constructor() {
+//     super();
 
-    Gen2.add(this)
-  }
-}
+//     Gen2.add(this)
+//   }
+// }
 
-const gen1Instance = new Gen1();
-const gen2Instance = new Gen2();
+// const gen1Instance = new Gen1();
+// const gen2Instance = new Gen2();
 
-console.log("Gen1 instances:", Gen1.instances);
-console.log("Gen2 instances:", Gen2.instances);
+// console.log("Gen1 instances:", Gen1.instances);
+// console.log("Gen2 instances:", Gen2.instances);
+
+console.log("Saver class test");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+console.log("\\\\\\\\ Sandbox End \\\\\\\\")

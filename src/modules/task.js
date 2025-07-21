@@ -1,25 +1,36 @@
-import PubSub from "./pubsub";
+import AutoStoringObject from "./auto-storing-object";
 
 export class Task {
-  static tasks = {};
+  static autoStoredProperties = ["id", "title", "description"];
+
+  static tasksById = {};
 
   static getTask(id) {
-    return this.tasks[id]
+    return this.tasksById[id];
   }
 
   static add(task) {
-    this.tasks[task.id] = task;
+    this.tasksById[task.id] = task;
   }
 
-  constructor({ title, description, dueDate, priority, userProject, isCompleted, id }) {
+  constructor({
+    title = "Task title",
+    description = "Task description",
+    dueDate = new Date(),
+    priority = "normal",
+    isCompleted = false,
+    id,
+  } = {}) {
+    this.id = id || crypto.randomUUID();
     this.title = title;
     this.description = description;
     this.dueDate = new Date(dueDate);
     this.priority = priority;
-    this.userProject = userProject;
     this.isCompleted = isCompleted;
-    this.id = id || crypto.randomUUID();
 
+    this.project = null;
+
+    this.defineAutoStoringProperties(["title", "description"]);
     Task.add(this);
   }
 
@@ -27,10 +38,36 @@ export class Task {
     Task.delete(this);
   }
 
-  toJSON(key) {
-    if (key) {
-      return this.id;
+  setProject(newProject) {
+    if (this.project === newProject) return;
+    if (this.project) this.removeProject();
+    this.project = newProject;
+    if (newProject) {
+      newProject.addTask(this);
     }
-    return { className: this.constructor.name, parameters: { ...this } };
+  }
+
+  removeProject() {
+    this.project.removeTask(this);
+    this.project = null;
+  }
+
+  saveInStorage() {
+    localStorage.setItem(this.id, JSON.stringify(this));
+  }
+
+  toJSON(key) {
+    // const itemArguments = {
+    //   title: this.title,
+    //   description: this.description,
+    //   dueDate: this.dueDate,
+    //   priority: this.priority,
+    //   isCompleted: this.isCompleted,
+    //   id: this.id,
+    // };
+    // return { className: this.constructor.name, parameters: { ...this } };
+    return { className: this.constructor.name, itemArguments: {...this} };
   }
 }
+
+Object.assign(Task.prototype, AutoStoringObject);

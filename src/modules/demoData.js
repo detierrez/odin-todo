@@ -77,5 +77,5 @@ const projects = [
   },
 ];
 
-const demoData = { Task: tasks, UserProject: projects };
+const demoData = { Task: tasks, Project: projects };
 export default demoData;
