@@ -34,7 +34,7 @@ export class Collection {
   }
 
   get tasks() {
-    return Object.values(Task.tasksById);
+    return Task.getTasks();
   }
 
   get totalCompleted() {
@@ -55,30 +55,37 @@ export class Collection {
 }
 
 export class Project extends Collection {
+  static autoStoredProperties = ["id", "title", "description", "tasks"];
   constructor({ title, description, id, ownedTasksIds }) {
     super({ title, description, id });
 
     this.tasksById = {};
     for (const id of ownedTasksIds) {
       const task = Task.getTask(id);
-      this.addTask(task);
+      this.add(task);
     }
+
+    Storage.bind(this, Project.autoStoredProperties);
   }
 
   get tasks() {
     return Object.values(this.tasksById);
   }
 
-  removeTask(task) {
-    delete this.tasksById[task.id];
+  getTask(id) {
+    return this.tasksById[id];
   }
 
-  addTask(task) {
-    if (task.id in this.tasksById) {
-      return;
-    }
+  add(task) {
+    if (task.id in this.tasksById) return;
     this.tasksById[task.id] = task;
-    task.setProject(this);
+    task.project = this;
+  }
+
+  remove(task) {
+    if (!this.getTask(task.id)) return;
+    delete this.tasksById[task.id];
+    task.project = null;
   }
 
   toJSON(key) {
@@ -98,8 +105,8 @@ export class TimeCollection extends Collection {
     super(title, description, id);
   }
 
-  get tasksById() {
-    return Object.values(Task.tasksById).filter((task) =>
+  get tasks() {
+    return Task.getTasks().filter((task) =>
       isWithinInterval(task.dueDate, this.timeInterval)
     );
   }

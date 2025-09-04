@@ -1,4 +1,4 @@
-import AutoStoringObject from "./auto-storing-object";
+import Storage from "./storage";
 
 export class Task {
   static autoStoredProperties = ["id", "title", "description"];
@@ -9,8 +9,16 @@ export class Task {
     return this.tasksById[id];
   }
 
+  static getTasks() {
+    return Object.values(this.tasksById);
+  }
+
   static add(task) {
     this.tasksById[task.id] = task;
+  }
+
+  static remove(task) {
+    delete this.tasksById[task.id];
   }
 
   constructor({
@@ -28,46 +36,38 @@ export class Task {
     this.priority = priority;
     this.isCompleted = isCompleted;
 
-    this.project = null;
-
-    this.defineAutoStoringProperties(["title", "description"]);
     Task.add(this);
+    Storage.bind(this, Task.autoStoredProperties);
   }
-
+ 
   delete() {
-    Task.delete(this);
+    Task.remove(this);
+    Storage.remove(this);
+    this.project.remove(this);
   }
 
-  setProject(newProject) {
-    if (this.project === newProject) return;
-    if (this.project) this.removeProject();
-    this.project = newProject;
-    if (newProject) {
-      newProject.addTask(this);
-    }
+  get project() {
+    return this._project;
   }
 
-  removeProject() {
-    this.project.removeTask(this);
-    this.project = null;
-  }
+  set project(newProject) {
+    const oldProject = this._project;
+    if (oldProject === newProject) return;
 
-  saveInStorage() {
-    localStorage.setItem(this.id, JSON.stringify(this));
+    this._project = newProject;
+    if (oldProject) oldProject.remove(this);
+    if (newProject) newProject.add(this);
   }
 
   toJSON(key) {
-    // const itemArguments = {
-    //   title: this.title,
-    //   description: this.description,
-    //   dueDate: this.dueDate,
-    //   priority: this.priority,
-    //   isCompleted: this.isCompleted,
-    //   id: this.id,
-    // };
-    // return { className: this.constructor.name, parameters: { ...this } };
-    return { className: this.constructor.name, itemArguments: {...this} };
+    const parameters = {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      dueDate: this.dueDate,
+      priority: this.priority,
+      isCompleted: this.isCompleted,
+    };
+    return { className: this.constructor.name, parameters };
   }
 }
-
-Object.assign(Task.prototype, AutoStoringObject);

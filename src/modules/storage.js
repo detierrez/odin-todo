@@ -1,61 +1,56 @@
-import { Task } from "./task";
-import { Project } from "./project";
-import { isEqual, parse, parseJSON } from "date-fns";
-import initialData from "./initialData";
+class Storage {
+  static bind(item, properties) {
+    if (!item.id) throw Error;
 
-localStorage.clear();
+    for (const property of properties) {
+      this.makePropertyToStoreItemWhenSet(item, property);
+    }
 
-if (localStorage.length === 0) {
-  saveDemoItems();
-}
+    if (!localStorage.getItem(item.id)) this.save(item);
+  }
 
-const items = loadItems();
-console.log(items);
-console.log(Task.tasks);
+  static makePropertyToStoreItemWhenSet(item, property) {
+    Object.defineProperty(item, "_" + property, {
+      enumerable: false,
+      writable: true,
+      value: item[property],
+    });
+    Object.defineProperty(item, property, {
+      enumerable: true,
+      get() {
+        return item["_" + property];
+      },
+      set(newValue) {
+        if (newValue === item[property]) return;
+        item["_" + property] = newValue;
+        Storage.save(item);
+      },
+    });
+  }
 
-function saveDemoItems() {
-  const tasks = initialData.map((task) => new Task(task));
-  for (const task of tasks) {
-    localStorage.setItem(task.id, JSON.stringify(task));
+  static save(item) {
+    localStorage.setItem(item.id, JSON.stringify(item));
+  }
+
+  static remove(item) {
+    localStorage.removeItem(item.id);
   }
 }
 
-function loadItems() {
-  const storedClasses = {
-    Task: Task,
-    Project: Project,
-  };
-  const storedItems = { ...localStorage };
-  for (const id in storedItems) {
-    const { className, parameters } = JSON.parse(storedItems[id]);
-    const instance = new storedClasses[className](parameters);
-    storedItems[id] = instance;
+export default Storage;
+
+class Example {
+  constructor(name) {
+    this.id = crypto.randomUUID();
+    this.name = name;
+    this.desc = "asd";
+
+    Storage.bind(this, ["id", "name", "desc"]);
   }
-  return storedItems;
 }
 
-// for (const task of tasks) {
-//   const restored = stored[task.id];
-//   console.log(restored);
-//   for (const key in task) {
-//     if (key === "dueDate") {
-//       console.log(key, isEqual(task[key], restored[key]));
-//     } else {
-//       console.log(key, task[key] === restored[key]);
-//     }
-//   }
-// }
-
-// const strinfiedTasks = JSON.stringify(tasks, replacer);
-// const parsed = JSON.parse(stringified);
-// for (const parsedTask of parsed) {
-//   parsedTask.dueDate = parseJSON(parsedTask.dueDate);
-// }
-
-export function getTasks() {
-  return localStorage.getItem("tasks");
-}
-
-export function getProjects() {
-  return localStorage.getItem("projects");
-}
+// const example = new Example("John");
+// example.name = "Doemil";
+// example.desc = "xD";
+// // Storage.remove(example);
+// console.log(example);
