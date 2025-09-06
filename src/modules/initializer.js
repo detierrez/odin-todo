@@ -31,6 +31,6 @@ for (const item of storedItems) {
 
 for (const _class of storedClasses) {
   for (const itemArguments of itemsByClass[_class.name]) {
-    new _class(itemArguments);
+    _class.create(itemArguments);
   }
 }

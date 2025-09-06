@@ -9,28 +9,13 @@ import {
 } from "date-fns";
 
 import { Task } from "./task";
+import IndexingClass from "./indexing-class";
 
 export class Collection {
-  static instances = {};
-
-  static add(project) {
-    this.instances[project.id] = project;
-  }
-
-  static get projects() {
-    return Object.values(this.instances);
-  }
-
-  static getProject(id) {
-    return this.instances[id];
-  }
-
-  constructor({ title, description, id }) {
+  constructor({ id, title, description }) {
+    this.id = id || crypto.randomUUID();
     this.title = title;
     this.description = description;
-    this.id = id || crypto.randomUUID();
-
-    Collection.add(this);
   }
 
   get tasks() {
@@ -55,50 +40,37 @@ export class Collection {
 }
 
 export class Project extends Collection {
-  static autoStoredProperties = ["id", "title", "description", "tasks"];
-  constructor({ title, description, id, ownedTasksIds }) {
-    super({ title, description, id });
-
-    this.tasksById = {};
-    for (const id of ownedTasksIds) {
-      const task = Task.getTask(id);
-      this.add(task);
-    }
-
-    Storage.bind(this, Project.autoStoredProperties);
+  constructor({ id, title, description, ownedTasksIds }) {
+    super({ id, title, description });
+    this.ownedTasksIds = new Set(ownedTasksIds);
   }
 
   get tasks() {
-    return Object.values(this.tasksById);
+    const ids = Array.from(this.ownedTasksIds);
+    return ids.map((id) => Task.get(id));
   }
 
-  getTask(id) {
-    return this.tasksById[id];
+  add(taskId) {
+    this.ownedTasksIds.add(taskId);
   }
 
-  add(task) {
-    if (task.id in this.tasksById) return;
-    this.tasksById[task.id] = task;
-    task.project = this;
-  }
-
-  remove(task) {
-    if (!this.getTask(task.id)) return;
-    delete this.tasksById[task.id];
-    task.project = null;
+  remove(taskId) {
+    this.ownedTasksIds.delete(taskId)
   }
 
   toJSON(key) {
-    const parameters = {
+    const args = {
       title: this.title,
       description: this.description,
       id: this.id,
       ownedTasksIds: this.tasks.map((task) => task.id),
     };
     // return { className: this.constructor.name, parameters: { ...this } };
-    return { className: this.constructor.name, parameters };
+    return { className: this.constructor.name, args };
   }
 }
+
+Object.assign(Project, new IndexingClass);
 
 export class TimeCollection extends Collection {
   constructor(title, description, id) {

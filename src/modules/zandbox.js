@@ -1,4 +1,4 @@
-console.log("/// Sandbox Start ///")
+console.log("/// Sandbox Start ///");
 // class Person {
 //   constructor(name) {
 //     this.name = name;
@@ -34,7 +34,7 @@ import { tr } from "date-fns/locale";
 
 // console.log(person1.toString())
 
-console.log("Before");
+// console.log("Before");
 
 // class Gen1 {
 //   static instances = [];
@@ -69,21 +69,30 @@ console.log("Before");
 // console.log("Gen1 instances:", Gen1.instances);
 // console.log("Gen2 instances:", Gen2.instances);
 
-console.log("Saver class test");
+// console.log("Saver class test");
 
 // *** Task testing ***
 
+// *** Sets ***
 
+// const array = [1, 2, 3, 4, 5];
+// const set = new Set(array);
+// console.log(set);
+// const mapped = Array.from(set)
+// console.log(mapped)
 
+// *** Assigning classes ***
 
+class A {
+  static val1 = "a";
+}
 
+class B {
+  static val2 = "b";
+}
 
+Object.assign(A, B)
 
+console.dir({A, B})
 
-
-
-
-
-
-
-console.log("\\\\\\\\ Sandbox End \\\\\\\\")
+console.log("\\\\\\\\ Sandbox End \\\\\\\\");

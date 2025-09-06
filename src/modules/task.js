@@ -1,26 +1,6 @@
-import Storage from "./storage";
+import IndexingClass from "./indexing-class";
 
 export class Task {
-  static autoStoredProperties = ["id", "title", "description"];
-
-  static tasksById = {};
-
-  static getTask(id) {
-    return this.tasksById[id];
-  }
-
-  static getTasks() {
-    return Object.values(this.tasksById);
-  }
-
-  static add(task) {
-    this.tasksById[task.id] = task;
-  }
-
-  static remove(task) {
-    delete this.tasksById[task.id];
-  }
-
   constructor({
     title = "Task title",
     description = "Task description",
@@ -35,32 +15,10 @@ export class Task {
     this.dueDate = new Date(dueDate);
     this.priority = priority;
     this.isCompleted = isCompleted;
-
-    Task.add(this);
-    Storage.bind(this, Task.autoStoredProperties);
-  }
- 
-  delete() {
-    Task.remove(this);
-    Storage.remove(this);
-    this.project.remove(this);
   }
 
-  get project() {
-    return this._project;
-  }
-
-  set project(newProject) {
-    const oldProject = this._project;
-    if (oldProject === newProject) return;
-
-    this._project = newProject;
-    if (oldProject) oldProject.remove(this);
-    if (newProject) newProject.add(this);
-  }
-
-  toJSON(key) {
-    const parameters = {
+  get properties() {
+    return {
       id: this.id,
       title: this.title,
       description: this.description,
@@ -68,6 +26,17 @@ export class Task {
       priority: this.priority,
       isCompleted: this.isCompleted,
     };
-    return { className: this.constructor.name, parameters };
+  }
+
+  toJSON(key) {
+    return { className: this.constructor.name, args: this.properties };
   }
 }
+
+Object.assign(Task, new IndexingClass);
+
+console.dir(Task)
+// app.deleteTask(taskId);
+// const task2 = app.createTask({ title: "xD", description: "lol" });
+// console.log(task2);
+// app.deleteTask(task2.id);
