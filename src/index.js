@@ -7,11 +7,14 @@ import app from "./modules/app";
 
 const projects = app.getProjects();
 console.log({ projects });
+console.log(app.getTasks())
 const project = projects[0];
 const totalCompleted = project.totalCompleted;
 const tasks = project.tasks;
 console.log({ projects, project, totalCompleted, tasks });
-app.deleteProject(project.id);
+// app.deleteProject(project.id);
+
+window.app = app;
 
 // import "./modules/storable";
 // import "./modules/task"

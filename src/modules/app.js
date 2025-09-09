@@ -13,6 +13,10 @@ class Application {
     return Task.get(id);
   }
 
+  getTasks() {
+    return Task.getAll();
+  }
+
   updateTask(id, updates) {
     const task = Task.get(id);
     for (const [property, value] of Object.entries(updates)) {
@@ -49,8 +53,15 @@ class Application {
 
   addTaskToProject(taskId, projectId) {
     const task = Task.get(taskId);
-    const project = Project.get(projectId);
-    project.add(task);
+    const projectToBeAssigned = Project.get(projectId);
+    const allProjects = Project.getAll();
+    for (const project of allProjects) {
+      if (project === projectToBeAssigned) {
+        project.add(task.id);
+      } else {
+        project.remove(task.id);
+      }
+    }
   }
 
   removeTaskFromProject(taskId, projectId) {

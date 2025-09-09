@@ -24,6 +24,7 @@ export class Collection {
 
   get totalCompleted() {
     let count = 0;
+    let taskClass = Task;
     for (const task of this.tasks) {
       count += +task.isCompleted;
     }
@@ -55,7 +56,7 @@ export class Project extends Collection {
   }
 
   remove(taskId) {
-    this.ownedTasksIds.delete(taskId)
+    this.ownedTasksIds.delete(taskId);
   }
 
   toJSON(key) {
@@ -70,7 +71,7 @@ export class Project extends Collection {
   }
 }
 
-Object.assign(Project, new IndexingClass);
+Object.assign(Project, new IndexingClass());
 
 export class TimeCollection extends Collection {
   constructor(title, description, id) {
