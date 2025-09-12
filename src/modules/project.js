@@ -12,19 +12,22 @@ import { Task } from "./task";
 import IndexingClass from "./indexing-class";
 
 export class Collection {
-  constructor({ id, title, description }) {
+  constructor({
+    id = "all",
+    title = "Inbox",
+    description = "All of your tasks",
+  } = {}) {
     this.id = id || crypto.randomUUID();
     this.title = title;
     this.description = description;
   }
 
   get tasks() {
-    return Task.getTasks();
+    return Task.getAll();
   }
 
   get totalCompleted() {
     let count = 0;
-    let taskClass = Task;
     for (const task of this.tasks) {
       count += +task.isCompleted;
     }
@@ -79,7 +82,7 @@ export class TimeCollection extends Collection {
   }
 
   get tasks() {
-    return Task.getTasks().filter((task) =>
+    return Task.getAll().filter((task) =>
       isWithinInterval(task.dueDate, this.timeInterval)
     );
   }
@@ -94,8 +97,8 @@ export class TodayCollection extends TimeCollection {
     title = "Today",
     description = "Everything due today",
     id = "today",
-  }) {
-    super(title, description, id);
+  } = {}) {
+    super({ title, description, id });
   }
 
   get timeInterval() {
@@ -111,8 +114,8 @@ export class TomorrowCollection extends TimeCollection {
     title = "Tomorrow",
     description = "To do tomorrow",
     id = "tomorrow",
-  }) {
-    super(title, description, id);
+  } = {}) {
+    super({ title, description, id });
   }
 
   get timeInterval() {
@@ -128,8 +131,8 @@ export class WeekCollection extends TimeCollection {
     title = "This Week",
     description = "What's to be done this week",
     id = "thisweek",
-  }) {
-    super(title, description, id);
+  } = {}) {
+    super({ title, description, id });
   }
 
   get timeInterval() {

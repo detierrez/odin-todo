@@ -1,9 +1,11 @@
 import "modern-normalize";
 import "./css/reset.css";
+import "./css/base.css"
 
 import "./modules/initializer";
 
 import app from "./modules/app";
+import "./modules/ui-controller"
 
 const projects = app.getProjects();
 console.log({ projects });

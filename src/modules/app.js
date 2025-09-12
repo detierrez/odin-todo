@@ -1,5 +1,11 @@
 import { Task } from "./task";
-import { Collection, Project } from "./project";
+import {
+  Collection,
+  Project,
+  TodayCollection,
+  TomorrowCollection,
+  WeekCollection,
+} from "./project";
 import Storage from "./storage";
 
 class Application {
@@ -78,6 +84,28 @@ class Application {
     }
     Project.remove(project.id);
     Storage.remove(project);
+  }
+
+  collectionClassById = {
+    all: Collection,
+    today: TodayCollection,
+    tomorrow: TomorrowCollection,
+    thisweek: WeekCollection,
+  };
+
+  getCollection(id) {
+    return new this.collectionClassById[id]();
+  }
+
+  getCollections() {
+    const collections = [
+      new Collection(),
+      new TodayCollection(),
+      new TomorrowCollection(),
+      new WeekCollection(),
+    ];
+
+    return collections;
   }
 }
 
