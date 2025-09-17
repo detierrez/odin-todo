@@ -1,6 +1,6 @@
-class IndexingClass {
+class Indexer {
   constructor() {
-    return class {
+    return class Indexed {
       static instancesById = {};
 
       static create = function (args) {
@@ -24,7 +24,7 @@ class IndexingClass {
   }
 }
 
-export default IndexingClass;
+export default Indexer;
 
 // class Example {
 //   constructor({ foo = "Hello", bar = "World" } = {}) {

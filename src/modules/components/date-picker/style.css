@@ -1,0 +1,38 @@
+.date-picker {
+  /* max-width: 7em; */
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+
+  .date-input {
+    user-select: none;
+    opacity: 0;
+    max-width: 24px;
+    padding-right: 2px;
+    border-radius: 50%;
+  }
+
+  .date-input,
+  .date-formatted {
+    opacity: 0;
+  }
+
+  &:hover {
+    .date-input,
+    .date-formatted {
+      opacity: 1;
+    }
+  }
+
+  /* .date-formatted {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.4);
+  } */
+
+  .date-distance,
+  .date-formatted {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}

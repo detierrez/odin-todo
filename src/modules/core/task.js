@@ -1,4 +1,4 @@
-import IndexingClass from "./indexing-class";
+import Indexer from "./indexer";
 
 export class Task {
   constructor({
@@ -29,13 +29,13 @@ export class Task {
   }
 
   toJSON(key) {
-    return { className: this.constructor.name, args: this.properties };
+    return { className: this.constructor.name, itemArguments: this.properties };
   }
 }
 
-Object.assign(Task, new IndexingClass);
+Object.assign(Task, new Indexer());
 
-console.dir(Task)
+console.dir(Task);
 // app.deleteTask(taskId);
 // const task2 = app.createTask({ title: "xD", description: "lol" });
 // console.log(task2);

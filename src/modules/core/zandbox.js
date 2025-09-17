@@ -83,16 +83,31 @@ import { tr } from "date-fns/locale";
 
 // *** Assigning classes ***
 
-class A {
-  static val1 = "a";
+// class A {
+//   static val1 = "a";
+// }
+
+// class B {
+//   static val2 = "b";
+// }
+
+// Object.assign(A, B)
+
+// console.dir({A, B})
+
+// console.log("\\\\\\\\ Sandbox End \\\\\\\\");
+
+// *** Destructuring ***
+
+const args = { a: 1, b: 2 };
+layer1(args);
+
+function layer1({ a, ...passDown }) {
+  console.log(a);
+  console.log(passDown);
+  layer2(passDown)
 }
 
-class B {
-  static val2 = "b";
+function layer2({ b }) {
+  console.log(b)
 }
-
-Object.assign(A, B)
-
-console.dir({A, B})
-
-console.log("\\\\\\\\ Sandbox End \\\\\\\\");

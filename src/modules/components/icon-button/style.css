@@ -1,0 +1,25 @@
+.icon-button {
+  border: 1px solid;
+  border-color: black;
+  aspect-ratio: 1;
+  padding: 0 3px;
+  user-select: none;
+
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 75%;
+    filter: invert(1);
+  }
+}
+
+.completed .check-icon {
+  display: none;
+}
+
+.not-completed .not-check-icon {
+  display: none;
+}

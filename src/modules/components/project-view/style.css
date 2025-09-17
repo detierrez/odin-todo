@@ -1,0 +1,33 @@
+.project-view {
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+
+  .description {
+    min-height: 3em;
+  }
+
+  .add-button {
+    box-sizing: content-box;
+    align-self: flex-end;
+    border: none;
+
+    outline: 1px solid transparent;
+
+    padding: 0 0px;
+
+    width: 24px;
+    /* background-color: black; */
+
+    transition: outline 300ms;
+    &:hover {
+      outline: 1px solid #888;
+    }
+
+    img {
+      filter: brightness(0);
+    }
+  }
+}

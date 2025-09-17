@@ -1,4 +1,4 @@
-import "./project-button.css";
+import "./style.css";
 
 export function createProjectButton(project) {
   const btn = document.createElement("button");
@@ -7,13 +7,14 @@ export function createProjectButton(project) {
 
   const title = document.createElement("div");
   title.textContent = project.title;
+  btn.append(title);
 
   const pending = document.createElement("div");
   const pendingAmount = project.totalPending;
   pending.textContent = pendingAmount;
   pending.className = "pending";
   pending.className += pendingAmount > 0 ? "" : " hidden";
+  // btn.append(pending);
 
-  btn.append(title, pending);
   return btn;
 }

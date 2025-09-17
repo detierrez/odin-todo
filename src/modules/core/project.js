@@ -9,7 +9,7 @@ import {
 } from "date-fns";
 
 import { Task } from "./task";
-import IndexingClass from "./indexing-class";
+import Indexer from "./indexer";
 
 export class Collection {
   constructor({
@@ -59,6 +59,7 @@ export class Project extends Collection {
   }
 
   remove(taskId) {
+    console.log({ deleted: taskId, kept: this.ownedTasksIds });
     this.ownedTasksIds.delete(taskId);
   }
 
@@ -74,7 +75,7 @@ export class Project extends Collection {
   }
 }
 
-Object.assign(Project, new IndexingClass());
+Object.assign(Project, new Indexer());
 
 export class TimeCollection extends Collection {
   constructor(title, description, id) {
