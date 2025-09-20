@@ -1,4 +1,4 @@
-import Indexer from "./indexer";
+import makeClassIndexer from "./indexer";
 
 export class Task {
   constructor({
@@ -29,14 +29,9 @@ export class Task {
   }
 
   toJSON(key) {
-    return { className: this.constructor.name, itemArguments: this.properties };
+    return { itemClass: this.constructor.name, itemArguments: this.properties };
   }
 }
 
-Object.assign(Task, new Indexer());
+makeClassIndexer(Task);
 
-console.dir(Task);
-// app.deleteTask(taskId);
-// const task2 = app.createTask({ title: "xD", description: "lol" });
-// console.log(task2);
-// app.deleteTask(task2.id);

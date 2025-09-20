@@ -9,25 +9,40 @@
     min-height: 3em;
   }
 
-  .add-button {
-    box-sizing: content-box;
-    align-self: flex-end;
-    border: none;
+  .add-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
-    outline: 1px solid transparent;
-
-    padding: 0 0px;
-
-    width: 24px;
-    /* background-color: black; */
-
-    transition: outline 300ms;
-    &:hover {
-      outline: 1px solid #888;
+    .add-label {
+      padding-right: 0.5em;
+      font-size: 0.8rem;
+      cursor: pointer;
+      opacity: 0;
+      color: #888;
+      transition: opacity 300ms;
     }
 
-    img {
-      filter: brightness(0);
+    &:hover .add-label {
+      opacity: 1;
+    }
+
+    .add-button {
+      border: none;
+      outline: 1px solid transparent;
+      padding: 0;
+
+      width: 24px;
+      /* background-color: black; */
+
+      transition: outline 300ms;
+      &:hover {
+        outline: 1px solid #888;
+      }
+
+      img {
+        filter: brightness(0);
+      }
     }
   }
 }

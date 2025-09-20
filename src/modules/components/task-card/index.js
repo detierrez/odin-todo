@@ -20,17 +20,21 @@ export default function createTaskCard({
   onValueChange,
   ...args
 }) {
-  const taskCard = document.createElement("button");
+  const taskCard = document.createElement("div");
   taskCard.className = "task-card";
   taskCard.dataset.taskId = task.id;
   taskCard.classList.add(task.isCompleted ? "completed" : "not-completed");
 
   const title = document.createElement("input");
   title.className = "title";
-  title.value = task.title;
+
+  title.placeholder = "Add a title...";
+
+  title.dataset.taskId = task.id;
   title.dataset.property = "title";
-  title.placeholder = "Add a title..."
+  title.value = task.title;
   title.addEventListener("change", onValueChange);
+
   taskCard.append(title);
 
   const buttonsGroup = document.createElement("div");
@@ -40,13 +44,23 @@ export default function createTaskCard({
     const checkButton = createCheckButton();
     checkButton.dataset.taskId = task.id;
     checkButton.card = taskCard;
-    checkButton.addEventListener("click", onCheckClick);
+    checkButton.addEventListener("click", (event) => {
+      taskCard.classList.toggle("completed");
+      taskCard.classList.toggle("not-completed");
+      onCheckClick(event);
+    });
     buttonsGroup.append(checkButton);
 
     const deleteButton = createDeleteButton();
     deleteButton.dataset.taskId = task.id;
-    deleteButton.card = taskCard;
-    deleteButton.addEventListener("click", onDeleteClick);
+    deleteButton.addEventListener(
+      "click",
+      (event) => {
+        taskCard.remove();
+        onDeleteClick(event);
+      },
+      true
+    );
     buttonsGroup.append(deleteButton);
   }
   taskCard.append(buttonsGroup);
@@ -60,9 +74,9 @@ export default function createTaskCard({
 
   const description = document.createElement("textarea");
   description.className = "description";
-  // description.rows = 5;
   description.value = task.description;
-  description.placeholder = "Add a description..."
+  description.placeholder = "Add a description...";
+  description.dataset.taskId = task.id;
   description.dataset.property = "description";
   description.addEventListener("change", onValueChange);
 

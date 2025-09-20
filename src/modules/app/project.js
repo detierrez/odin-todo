@@ -9,7 +9,7 @@ import {
 } from "date-fns";
 
 import { Task } from "./task";
-import Indexer from "./indexer";
+import makeClassIndexer from "./indexer";
 
 export class Collection {
   constructor({
@@ -58,24 +58,27 @@ export class Project extends Collection {
     this.ownedTasksIds.add(taskId);
   }
 
+  has(taskId) {
+    return this.ownedTasksIds.has(taskId)
+  }
+
   remove(taskId) {
-    console.log({ deleted: taskId, kept: this.ownedTasksIds });
     this.ownedTasksIds.delete(taskId);
   }
 
   toJSON(key) {
-    const args = {
+    const itemArguments = {
       title: this.title,
       description: this.description,
       id: this.id,
       ownedTasksIds: this.tasks.map((task) => task.id),
     };
     // return { className: this.constructor.name, parameters: { ...this } };
-    return { className: this.constructor.name, args };
+    return { itemClass: this.constructor.name, itemArguments };
   }
 }
 
-Object.assign(Project, new Indexer());
+makeClassIndexer(Project);
 
 export class TimeCollection extends Collection {
   constructor(title, description, id) {

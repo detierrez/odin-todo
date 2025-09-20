@@ -36,8 +36,8 @@ export function createCheckButton() {
 export function createAddButton() {
   const addButton = document.createElement("button");
   addButton.classList.add("icon-button", "add-button");
-
-  let img = createIconElement(plusIcon);
+  
+  const img = createIconElement(plusIcon);
   addButton.append(img);
 
   return addButton;

@@ -2,9 +2,7 @@ import "modern-normalize";
 import "./css/reset.css";
 import "./css/base.css"
 
-import "./modules/core/initializer";
-
-import app from "./modules/core/app";
+import app from "./modules/app";
 import "./modules/ui-controller"
 
 window.app = app;

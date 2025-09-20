@@ -7,8 +7,11 @@ import {
   WeekCollection,
 } from "./project";
 import Storage from "./storage";
+import "./initializer";
 
 class Application {
+  constructor() {}
+
   createTask(args) {
     const task = Task.create(args);
     Storage.save(task);
@@ -34,11 +37,15 @@ class Application {
 
   deleteTask(id) {
     const task = Task.get(id);
+    console.log(id);
     Task.remove(task.id);
     Storage.remove(task);
     const allProjects = Project.getAll();
     for (const project of allProjects) {
-      project.remove(task.id);
+      if (project.has(task.id)) {
+        project.remove(task.id);
+        Storage.save(project);
+      }
     }
   }
 
@@ -59,13 +66,15 @@ class Application {
 
   addTaskToProject(taskId, projectId) {
     const task = Task.get(taskId);
-    const projectToBeAssigned = Project.get(projectId);
+    const targetProject = Project.get(projectId);
     const allProjects = Project.getAll();
     for (const project of allProjects) {
-      if (project === projectToBeAssigned) {
+      if (project === targetProject) {
         project.add(task.id);
-      } else {
+        Storage.save(project);
+      } else if (project.has(task.id)) {
         project.remove(task.id);
+        Storage.save(project);
       }
     }
   }
@@ -74,6 +83,7 @@ class Application {
     const task = Task.get(taskId);
     const project = Project.get(projectId);
     project.remove(task);
+    Storage.save(project);
   }
 
   deleteProject(id) {
