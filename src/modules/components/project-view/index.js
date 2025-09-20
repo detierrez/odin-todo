@@ -4,16 +4,15 @@ import createTaskList from "../task-list";
 import TaskList from "../task-list";
 
 export default function createProjectView({ project, onAddClick, ...args }) {
-  console.log(project)
   const projectView = document.createElement("div");
+  projectView.className = "project-view";
+
   const title = document.createElement("h2");
   title.textContent = project.title;
-  projectView.append(title);
 
   const description = document.createElement("p");
   description.textContent = project.description;
   description.className = "description";
-  projectView.append(description);
 
   const addContainer = document.createElement("div");
   addContainer.className = "add-container";
@@ -22,28 +21,22 @@ export default function createProjectView({ project, onAddClick, ...args }) {
   addLabel.className = "add-label";
   addLabel.htmlFor = "add-button";
   addLabel.textContent = "New task";
-  addContainer.append(addLabel);
 
   const addButton = createAddButton();
   addButton.id = "add-button";
+
   addContainer.append(addButton);
-  projectView.append(addContainer);
+  addContainer.append(addLabel);
 
   const taskList = new TaskList({ tasks: project.tasks, ...args });
-  projectView.append(taskList.element);
-
   addButton.addEventListener("click", (event) => {
     onAddClick(event, taskList);
   });
 
-  // if (completedTasks.length) {
-  //   const completedTaskList = new TaskList({
-  //     tasks: completedTasks,
-  //     ...args,
-  //   });
-  //   projectView.append(completedTaskList.element);
-  // }
+  projectView.append(title);
+  projectView.append(description);
+  projectView.append(addContainer);
+  projectView.append(taskList.element);
 
-  projectView.className = "project-view";
   return projectView;
 }

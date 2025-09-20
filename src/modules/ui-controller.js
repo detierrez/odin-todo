@@ -1,50 +1,31 @@
-import { intlFormatDistance, isToday } from "date-fns";
 import app from "./app";
-import { createProjectButton } from "./components/project-button";
-import createProjectView from "./components/project-view";
+import createBody from "./components/body";
 
-const collectionsContainer = document.querySelector(".collections-container");
 const collections = app.getCollections();
-for (const collection of collections) {
-  const btn = createProjectButton(collection);
-  btn.dataset.type = "collection";
-  btn.addEventListener("click", renderCollectionView);
-  collectionsContainer.appendChild(btn);
-}
+const projects = app.getProjects();
 
-function renderCollectionView(event) {
+const sidebarArgs = { collections, projects, onCollectionClick };
+const mainArgs = {
+  onAddClick,
+  onCheckClick,
+  onDeleteClick,
+  onValueChange,
+  onDateChange,
+};
+
+const bodyComponent = createBody({ sidebarArgs, mainArgs });
+document.body.append(bodyComponent);
+document.querySelector("#all").click()
+
+
+let currentProject;
+
+function onCollectionClick(event) {
   const type = event.currentTarget.dataset.type;
   const id = event.currentTarget.dataset.id;
   const method = type === "collection" ? "getCollection" : "getProject";
-  const collection = app[method](id);
-  const args = {
-    project: collection,
-    stopPropagation,
-    onAddClick,
-    onCheckClick,
-    onDeleteClick,
-    onValueChange,
-    onDateChange,
-  };
-  const projectView = createProjectView(args);
-  divMain.replaceChildren(projectView);
-}
-
-const projectsContainer = document.querySelector(".projects-container");
-const projects = app.getProjects();
-for (const project of projects) {
-  const btn = createProjectButton(project);
-  btn.dataset.type = "project";
-  btn.addEventListener("click", renderCollectionView);
-  projectsContainer.appendChild(btn);
-}
-
-let currentProject;
-const divMain = document.querySelector(".main");
-document.querySelector('button[data-id="all"]').click();
-
-function stopPropagation(event) {
-  event.stopPropagation();
+  const collection = app[method](id)
+  return collection;
 }
 
 function onValueChange(event) {

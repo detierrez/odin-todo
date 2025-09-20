@@ -2,32 +2,18 @@
   /* border: 1px solid; */
 }
 
-body {
+/* body {
   display: grid;
   grid-template-columns: 25vw 75vw;
-}
+} */
 
-.side {
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-
-  .logo {
-    display: flex;
-    align-items: center;
-    .placeholder {
-      width: 1em;
-      aspect-ratio: 1;
-    }
-  }
-
-  .collections-container,
-  .projects-container {
-    display: flex;
-    flex-direction: column;
-  }
-}
 
 .hidden {
   visibility: hidden;
+}
+
+
+
+.main {
+  border: 1px solid red
 }
