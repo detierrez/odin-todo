@@ -1,4 +1,4 @@
-.project-view {
+.collection-view {
   max-width: 450px;
   display: flex;
   flex-direction: column;
@@ -20,7 +20,7 @@
       cursor: pointer;
       opacity: 0;
       color: #888;
-      transition: opacity 300ms;
+      transition: opacity 150ms;
     }
 
     &:hover .add-label {

@@ -4,7 +4,7 @@ import createBody from "./components/body";
 const collections = app.getCollections();
 const projects = app.getProjects();
 
-const sidebarArgs = { collections, projects, onCollectionClick };
+const sidebarArgs = { collections, projects };
 const mainArgs = {
   onAddClick,
   onCheckClick,
@@ -13,19 +13,20 @@ const mainArgs = {
   onDateChange,
 };
 
-const bodyComponent = createBody({ sidebarArgs, mainArgs });
+const bodyComponent = createBody({
+  getCollectionFromEvent,
+  mainArgs,
+  sidebarArgs,
+});
 document.body.append(bodyComponent);
-document.querySelector("#all").click()
-
+document.querySelector("button").click();
 
 let currentProject;
 
-function onCollectionClick(event) {
-  const type = event.currentTarget.dataset.type;
-  const id = event.currentTarget.dataset.id;
+function getCollectionFromEvent(event) {
+  const { type, id } = event.currentTarget.dataset;
   const method = type === "collection" ? "getCollection" : "getProject";
-  const collection = app[method](id)
-  return collection;
+  return app[method](id);
 }
 
 function onValueChange(event) {

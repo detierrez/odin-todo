@@ -17,7 +17,9 @@ export default function createSidebar({
     btn.textContent = collection.title;
     btn.dataset.id = collection.id;
     btn.dataset.type = "collection";
-    btn.addEventListener("click", onCollectionClick);
+
+    btn.addEventListener("click", onCollectionClick)
+
     collectionsContainer.appendChild(btn);
   }
 
@@ -30,9 +32,7 @@ export default function createSidebar({
     btn.textContent = project.title;
     btn.dataset.id = project.id;
     btn.dataset.type = "project";
-    btn.addEventListener("click", (event) => {
-      project = onCollectionClick();
-    });
+    btn.addEventListener("click", onCollectionClick);
     projectsContainer.appendChild(btn);
   }
 

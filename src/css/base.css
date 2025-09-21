@@ -1,19 +1,20 @@
-* {
-  /* border: 1px solid; */
-}
+/* * {
+  border: 1px solid;
+} */
 
 /* body {
   display: grid;
   grid-template-columns: 25vw 75vw;
 } */
 
-
 .hidden {
   visibility: hidden;
 }
 
+/* .main {
+  border: 1px solid red;
+} */
 
-
-.main {
-  border: 1px solid red
+body {
+  background-color: rgb(24, 24, 44);
 }
