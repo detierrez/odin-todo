@@ -1,17 +1,11 @@
-import { createAddButton } from "../icon-button";
 import "./style.css";
-import TaskList from "../task-list";
-
-// class ProjectView {
-//   constructor() {
-//     this.element = document.createElement("div");
-//     projectView.className = "project-view";
-//   }
-// }
+import createTaskView from "../task-view";
+import createFieldElement from "../field-element";
 
 export default function createCollectionView({
   collection,
   onAddClick,
+  updateProjectFromEvent,
   ...args
 }) {
   const collectionView = document.createElement("div");
@@ -24,29 +18,38 @@ export default function createCollectionView({
   description.textContent = collection.description;
   description.className = "description";
 
-  const addContainer = document.createElement("div");
-  addContainer.className = "add-container";
+  const taskView = createTaskView({ tasks: collection.tasks, ...args });
 
-  const addLabel = document.createElement("label");
-  addLabel.className = "add-label";
-  addLabel.htmlFor = "add-button";
-  addLabel.textContent = "New task";
-
-  const addButton = createAddButton();
-  addButton.id = "add-button";
-
-  addContainer.append(addLabel);
-  addContainer.append(addButton);
-
-  const taskList = new TaskList({ tasks: collection.tasks, ...args });
-  addButton.addEventListener("click", (event) => {
-    onAddClick(event, taskList);
-  });
-
-  collectionView.append(title);
-  collectionView.append(description);
-  collectionView.append(addContainer);
-  collectionView.append(taskList.element);
+  collectionView.append(
+    createFieldElement({
+      type: "title",
+      value: collection.title,
+      onValueChange: updateProjectFromEvent,
+      dataset: {
+        collectionId: collection.id,
+        collectionProperty: "title",
+      },
+    })
+  );
+  // collectionView.append(
+  //   createFieldElement({
+  //     type: "title",
+  //     value: collection.title,
+  //     isReadOnly: true,
+  //   })
+  // );
+  // collectionView.append(
+  //   createFieldElement({
+  //     type: "description",
+  //     value: collection.description,
+  //     onValueChange: updateProjectFromEvent,
+  //     dataset: {
+  //       collectionId: collection.id,
+  //       collectionProperty: "description",
+  //     },
+  //   })
+  // );
+  collectionView.append(taskView);
 
   return collectionView;
 }

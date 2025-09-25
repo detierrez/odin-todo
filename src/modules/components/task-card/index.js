@@ -1,20 +1,14 @@
-import {
-  endOfDay,
-  endOfToday,
-  formatDistanceToNow,
-  formatRelative,
-  intlFormat,
-  intlFormatDistance,
-  isWithinInterval,
-  startOfToday,
-} from "date-fns";
 import "./style.css";
 import createDatePicker from "../date-picker";
-import { createCheckButton, createDeleteButton } from "../icon-button";
+import createIconButton, {
+  createCheckButton,
+  createDeleteButton,
+  createTwoSidedIconButton,
+} from "../icon-button";
+import createFieldElement from "../field-element";
 
 export default function createTaskCard({
   task,
-  stopPropagation,
   onCheckClick,
   onDeleteClick,
   onValueChange,
@@ -25,23 +19,23 @@ export default function createTaskCard({
   taskCard.dataset.taskId = task.id;
   taskCard.classList.add(task.isCompleted ? "completed" : "not-completed");
 
-  const title = document.createElement("input");
-  title.className = "title";
-
-  title.placeholder = "Add a title...";
-
-  title.dataset.taskId = task.id;
-  title.dataset.property = "title";
-  title.value = task.title;
-  title.addEventListener("change", onValueChange);
-
-  taskCard.append(title);
+  taskCard.append(
+    createFieldElement({
+      type: "title",
+      value: task.title,
+      onValueChange,
+      dataset: {
+        taskId: task.id,
+        taskProperty: "title",
+      },
+    })
+  );
 
   const buttonsGroup = document.createElement("div");
   buttonsGroup.className = "buttons-group";
 
   {
-    const checkButton = createCheckButton();
+    const checkButton = createTwoSidedIconButton("check", "notCheck");
     checkButton.dataset.taskId = task.id;
     checkButton.card = taskCard;
     checkButton.addEventListener("click", (event) => {
@@ -51,7 +45,7 @@ export default function createTaskCard({
     });
     buttonsGroup.append(checkButton);
 
-    const deleteButton = createDeleteButton();
+    const deleteButton = createIconButton("trashBin");
     deleteButton.dataset.taskId = task.id;
     deleteButton.addEventListener(
       "click",
@@ -65,26 +59,25 @@ export default function createTaskCard({
   }
   taskCard.append(buttonsGroup);
 
-  const datePicker = createDatePicker({
-    taskId: task.id,
-    date: task.dueDate,
-    ...args,
-  });
-  taskCard.append(datePicker);
+  taskCard.append(
+    createDatePicker({
+      taskId: task.id,
+      date: task.dueDate,
+      ...args,
+    })
+  );
 
-  const description = document.createElement("textarea");
-  description.className = "description";
-  description.value = task.description;
-  description.placeholder = "Add a description...";
-  description.dataset.taskId = task.id;
-  description.dataset.property = "description";
-  description.addEventListener("change", onValueChange);
+  taskCard.append(
+    createFieldElement({
+      type: "description",
+      value: task.description,
+      onValueChange,
+      dataset: {
+        taskId: task.id,
+        taskProperty: "description",
+      },
+    })
+  );
 
-  taskCard.append(description);
-
-  // for (const child of taskCard.children) {
-  //   child.addEventListener("click", stopPropagation);
-  //   child.addEventListener("keyup", stopPropagation);
-  // }
   return taskCard;
 }

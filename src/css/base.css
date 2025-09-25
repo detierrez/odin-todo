@@ -1,11 +1,6 @@
-/* * {
-  border: 1px solid;
-} */
-
-/* body {
-  display: grid;
-  grid-template-columns: 25vw 75vw;
-} */
+* {
+  transition: background-color 150ms ease-in-out, opacity 150ms ease-in-out;
+}
 
 .hidden {
   visibility: hidden;
@@ -16,5 +11,5 @@
 } */
 
 body {
-  background-color: rgb(24, 24, 44);
+  background-color: rgb(188, 228, 187);
 }

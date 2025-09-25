@@ -44,7 +44,7 @@ export class Collection {
 }
 
 export class Project extends Collection {
-  constructor({ id, title, description, ownedTasksIds }) {
+  constructor({ id = crypto.randomUUID(), title = "", description, ownedTasksIds }) {
     super({ id, title, description });
     this.ownedTasksIds = new Set(ownedTasksIds);
   }
@@ -59,7 +59,7 @@ export class Project extends Collection {
   }
 
   has(taskId) {
-    return this.ownedTasksIds.has(taskId)
+    return this.ownedTasksIds.has(taskId);
   }
 
   remove(taskId) {

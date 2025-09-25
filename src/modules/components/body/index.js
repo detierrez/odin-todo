@@ -2,16 +2,12 @@ import "./style.css";
 import createSidebar from "../sidebar";
 import createCollectionView from "../collection-view";
 
-export default function createBody({
-  sidebarArgs,
-  mainArgs,
-  getCollectionFromEvent,
-}) {
+export default function createBody({ getCollectionFromEvent, ...args }) {
   const body = document.createElement("div");
   body.classList.add("app-body");
 
   const renderCollection = function (collection) {
-    const newView = createCollectionView({ collection, ...mainArgs });
+    const newView = createCollectionView({ collection, ...args });
     main.replaceWith(newView);
     main = newView;
   };
@@ -19,11 +15,11 @@ export default function createBody({
   const onCollectionClick = function (event) {
     const collection = getCollectionFromEvent(event);
     renderCollection(collection);
-  }
+  };
 
   const sidebar = createSidebar({
     onCollectionClick,
-    ...sidebarArgs,
+    ...args,
   });
 
   let main = document.createElement("div");

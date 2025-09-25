@@ -50,18 +50,28 @@ class Application {
   }
 
   createProject(args) {
-    const project = new Project(args);
+    const project = Project.create(args);
     Storage.save(project);
     return project;
   }
 
   getProject(id) {
     const project = Project.get(id);
+
     return project;
   }
 
   getProjects() {
     return Project.getAll();
+  }
+
+  updateProject(id, updates) {
+    const project = Project.get(id);
+    for (const [property, value] of Object.entries(updates)) {
+      project[property] = value;
+    }
+    Storage.save(project);
+    return project;
   }
 
   addTaskToProject(taskId, projectId) {
@@ -116,6 +126,10 @@ class Application {
     ];
 
     return collections;
+  }
+
+  isProject(collection) {
+    return collection instanceof Project;
   }
 }
 

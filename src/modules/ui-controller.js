@@ -1,39 +1,43 @@
 import app from "./app";
 import createBody from "./components/body";
 
+let currentCollection;
+
 const collections = app.getCollections();
 const projects = app.getProjects();
 
-const sidebarArgs = { collections, projects };
-const mainArgs = {
-  onAddClick,
+const bodyArgs = {
+  getCollectionFromEvent,
+  updateProjectFromEvent,
+  createProjectFromEvent,
+  collections,
+  projects,
+  createTaskFromEvent,
   onCheckClick,
   onDeleteClick,
   onValueChange,
   onDateChange,
 };
 
-const bodyComponent = createBody({
-  getCollectionFromEvent,
-  mainArgs,
-  sidebarArgs,
-});
+const bodyComponent = createBody(bodyArgs);
+
 document.body.append(bodyComponent);
 document.querySelector("button").click();
 
-let currentProject;
-
 function getCollectionFromEvent(event) {
-  const { type, id } = event.currentTarget.dataset;
-  const method = type === "collection" ? "getCollection" : "getProject";
-  return app[method](id);
+  const { collectionType, collectionId } = event.currentTarget.dataset;
+  const method =
+    collectionType === "collection" ? "getCollection" : "getProject";
+  const collection = app[method](collectionId);
+
+  currentCollection = collection;
+  return collection;
 }
 
 function onValueChange(event) {
   const target = event.currentTarget;
-  app.updateTask(target.dataset.taskId, {
-    [target.dataset.property]: target.value,
-  });
+  const { taskId, taskProperty } = target.dataset;
+  app.updateTask(taskId, { [taskProperty]: target.value });
 }
 
 function onDateChange(event, newDate) {
@@ -50,9 +54,26 @@ function onDeleteClick(event) {
   app.deleteTask(event.currentTarget.dataset.taskId);
 }
 
-function onAddClick(event, taskList) {
+function createTaskFromEvent(event) {
   const args = { title: "", description: "" };
   const task = app.createTask(args);
 
-  taskList.addTask(task);
+  if (app.isProject(currentCollection)) {
+    app.addTaskToProject(task.id, currentCollection.id);
+  }
+
+  return task;
+}
+
+function createProjectFromEvent(event) {
+  const args = {};
+  const project = app.createProject(args);
+
+  return project;
+}
+
+function updateProjectFromEvent(event) {
+  const target = event.currentTarget;
+  const { collectionId, collectionProperty } = target.dataset;
+  app.updateProject(collectionId, { [collectionProperty]: target.value });
 }

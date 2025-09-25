@@ -1,49 +1,52 @@
 import "./style.css";
-import trashBinIcon from "@icons/trash-bin.svg";
-import checkIcon from "@icons/check.svg";
-import notCheckIcon from "@icons/not-check.svg";
-import plusIcon from "@icons/plus.svg";
+import trashBin from "@icons/trash-bin.svg";
+import check from "@icons/check.svg";
+import notCheck from "@icons/not-check.svg";
+import plus from "@icons/plus.svg";
 
-export default function createIconButton(icon) {
+const iconsByName = {
+  trashBin,
+  check,
+  notCheck,
+  plus,
+};
+
+export default function createIconButton(iconName) {
   const iconButton = document.createElement("button");
-  iconButton.className = "icon-button";
+  iconButton.classList.add("icon-button");
 
-  iconButton.append(createIconElement(icon));
+  iconButton.append(createIconElement(iconName));
 
   return iconButton;
 }
 
-export function createDeleteButton() {
-  const deleteButton = createIconButton(trashBinIcon);
-  return deleteButton;
+export function createTwoSidedIconButton(iconNameA, iconNameB) {
+  const iconButton = createIconButton(iconNameA);
+  iconButton.append(createIconElement(iconNameB));
+  iconButton.classList.add("two-sided", "side-a");
+
+  iconButton.addEventListener("click", (event) => {
+    iconButton.classList.toggle("side-a");
+    iconButton.classList.toggle("side-b");
+  });
+
+  return iconButton;
 }
 
-export function createCheckButton() {
-  const checkButton = document.createElement("button");
-  checkButton.classList.add("icon-button", "check-button");
+export function createLabeledButton(iconName, labelText) {
+  const label = document.createElement("span");
+  label.className = "icon-button-label";
+  label.textContent = labelText;
 
-  let img = createIconElement(checkIcon);
-  img.classList.add("check-icon");
-  checkButton.append(img);
+  const button = createIconButton(iconName);
 
-  img = createIconElement(notCheckIcon);
-  img.classList.add("not-check-icon");
-  checkButton.append(img);
+  label.append(button)
 
-  return checkButton;
+  return label;
 }
 
-export function createAddButton() {
-  const addButton = document.createElement("button");
-  addButton.classList.add("icon-button", "add-button");
-  
-  const img = createIconElement(plusIcon);
-  addButton.append(img);
-
-  return addButton;
-}
-
-function createIconElement(icon) {
+function createIconElement(iconName) {
+  const icon = iconsByName[iconName];
   const img = document.createElement("img");
   img.src = icon;
   return img;

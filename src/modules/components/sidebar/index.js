@@ -1,9 +1,12 @@
+import createIconButton from "../icon-button";
 import "./style.css";
 
 export default function createSidebar({
   collections,
   projects,
   onCollectionClick,
+  createProjectFromEvent,
+  ...args
 }) {
   const sidebar = document.createElement("aside");
   sidebar.classList.add("sidebar");
@@ -13,31 +16,49 @@ export default function createSidebar({
   collectionsContainer.innerHTML = "<h2>Collections</h2>";
 
   for (const collection of collections) {
-    const btn = document.createElement("button");
-    btn.textContent = collection.title;
-    btn.dataset.id = collection.id;
-    btn.dataset.type = "collection";
-
-    btn.addEventListener("click", onCollectionClick)
-
-    collectionsContainer.appendChild(btn);
+    collectionsContainer.append(
+      createCollectionButton(collection, "collection", onCollectionClick)
+    );
   }
 
   const projectsContainer = document.createElement("div");
   projectsContainer.classList.add("projects-container");
-  projectsContainer.innerHTML = "<h2>Projects</h2>";
 
+  const titleContainer = document.createElement("div");
+  titleContainer.classList.add("title-container");
+  titleContainer.innerHTML = "<span>Projects</span>";
+  const addProjectButton = createIconButton("plus");
+  addProjectButton.addEventListener("click", (event) => {
+    const project = createProjectFromEvent(event);
+    projectsContainer.append(
+      createCollectionButton(project, "project", onCollectionClick)
+    );
+  });
+  titleContainer.append(addProjectButton);
+
+  projectsContainer.append(titleContainer);
   for (const project of projects) {
-    const btn = document.createElement("button");
-    btn.textContent = project.title;
-    btn.dataset.id = project.id;
-    btn.dataset.type = "project";
-    btn.addEventListener("click", onCollectionClick);
-    projectsContainer.appendChild(btn);
+    projectsContainer.append(
+      createCollectionButton(project, "project", onCollectionClick)
+    );
   }
 
   sidebar.appendChild(collectionsContainer);
   sidebar.appendChild(projectsContainer);
 
   return sidebar;
+}
+
+function createCollectionButton(collection, type, onClick) {
+  const button = document.createElement("button");
+  button.classList.add("collection-button");
+  if (!collection.title) {
+    button.textContent = "New project";
+  } else {
+    button.textContent = collection.title;
+  }
+  button.dataset.collectionId = collection.id;
+  button.dataset.collectionType = type;
+  button.addEventListener("click", onClick);
+  return button;
 }

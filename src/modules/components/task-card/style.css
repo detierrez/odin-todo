@@ -1,21 +1,20 @@
 .task-card {
-  /* max-width: 400px; */
   background-color: rgb(223, 223, 223);
   border-radius: 0.5em;
   padding: 0.5em;
-  /* cursor: pointer; */
   border: none;
   text-align: left;
+
+  &:hover {
+    background-color: rgb(201, 201, 201);
+  }
 
   &.completed {
     opacity: 0.6;
   }
+}
 
-  &,
-  & * {
-    transition: background-color 300ms ease-in-out, opacity 150ms ease-in-out;
-  }
-
+.task-card {
   display: grid;
   gap: 0.2em;
   justify-content: space-between;
@@ -25,90 +24,29 @@
     "title buttons"
     "date  ......."
     "desc  desc   ";
-  & > .title {
+  > .title {
     grid-area: title;
   }
 
-  & > .buttons-group {
+  > .buttons-group {
     grid-area: buttons;
   }
 
-  & > .date-picker {
+  > .date-picker {
     grid-area: date;
   }
 
-  & > .description {
+  > .description {
     grid-area: desc;
   }
+}
 
-  &:hover {
-    background-color: rgb(201, 201, 201);
-  }
+.task-card > .buttons-group {
+  display: flex;
+  gap: 0.1em;
+  opacity: 0;
+}
 
-  /* &:active:not(:has(:active)) {
-    background-color: rgb(189, 189, 189);
-  } */
-
-  > .title,
-  .date-picker,
-  .description {
-    --horizontal-padding: 0.5em;
-    padding-left: var(--horizontal-padding);
-    padding-right: var(--horizontal-padding);
-  }
-
-  > .buttons-group {
-    display: flex;
-    gap: 0.1em;
-  }
-
-  > input {
-    font-weight: 600;
-  }
-
-  input,
-  textarea,
-  button {
-    border: none;
-
-    background-color: #0000;
-    &:hover {
-      background-color: #0004;
-    }
-  }
-
-  > input,
-  > textarea {
-    field-sizing: content;
-    border-radius: 0.25em;
-    cursor: pointer;
-    &:focus {
-      cursor: initial;
-    }
-
-    &:focus {
-      border: none;
-      outline: 1px solid #0006;
-      background-color: #0004;
-    }
-  }
-
-  p {
-    font-size: 0.85rem;
-  }
-
-  textarea {
-    width: 100%;
-    resize: none;
-  }
-
-  .buttons-group {
-    opacity: 0;
-  }
-
-  &:hover {
-    .buttons-group {
-      opacity: 1;
-    }
-  }
+.task-card:hover > .buttons-group {
+  opacity: 1;
 }
