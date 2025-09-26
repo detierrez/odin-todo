@@ -1,9 +1,6 @@
 import "./style.css";
 import createTaskCard from "../task-card";
-import createIconButton, {
-  createAddButton,
-  createLabeledButton,
-} from "../icon-button";
+import createIconButton from "../icon-button";
 
 export default function createTaskView({
   tasks,
@@ -18,7 +15,6 @@ export default function createTaskView({
     const task = createTaskFromEvent(event);
     addTaskToList(task, taskList, args);
   };
-  // const addComponent = createAddComponent(addTaskOnEvent);
 
   const addComponent = createIconButton("plus");
   addComponent.addEventListener("click", addTaskOnEvent);
@@ -27,24 +23,6 @@ export default function createTaskView({
   taskView.append(taskList);
 
   return taskView;
-}
-
-function createAddComponent(onClick) {
-  const addComponent = document.createElement("div");
-  addComponent.classList.add("add-component");
-
-  const label = document.createElement("label");
-  label.className = "add-label";
-  label.htmlFor = "add-task-button";
-  label.textContent = "New task";
-
-  const button = createIconButton("plus");
-  button.id = "add-task-button";
-
-  addComponent.append(label);
-  addComponent.append(button);
-
-  return addComponent;
 }
 
 function createTaskList({ tasks, ...args }) {
