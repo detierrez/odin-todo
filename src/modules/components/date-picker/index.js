@@ -4,29 +4,28 @@ import app from "../../app";
 
 export default function createDatePicker({
   taskId,
-  date,
+  date = new Date(),
   onDateChange,
   ...args
 }) {
-  const datePicker = document.createElement("div");
-  datePicker.className = "date-picker";
+  const datePicker = document.createElement("button");
+  datePicker.classList.add("date-picker", "field-element");
 
-  const dateLabel = document.createElement("p");
+  const dateLabel = document.createElement("span");
   dateLabel.textContent = getLabelText(date);
   dateLabel.className = "date-distance";
-  datePicker.append(dateLabel);
 
-  // const dateFormatted = document.createElement("span");
-  // dateFormatted.className = "date-formatted";
-  // dateFormatted.textContent = ": " + intlFormat(date, {
-  //   weekday: "long",
-  //   month: "short",
-  //   day: "numeric",
-  // });
-  // dateLabel.append(dateFormatted);
+  // // const dateFormatted = document.createElement("span");
+  // // dateFormatted.className = "date-formatted";
+  // // dateFormatted.textContent = ": " + intlFormat(date, {
+  // //   weekday: "long",
+  // //   month: "short",
+  // //   day: "numeric",
+  // // });
+  // // dateLabel.append(dateFormatted);
 
   const dateInput = document.createElement("input");
-  dateInput.className = "date-input";
+  dateInput.className = "input";
   dateInput.setAttribute("type", "date");
   dateInput.dataset.taskId = taskId;
   dateInput.value = format(date, "yyyy-MM-dd");
@@ -39,7 +38,13 @@ export default function createDatePicker({
       onDateChange(event, newDate);
     }
   });
+
+  datePicker.addEventListener("click", (event) => {
+    dateInput.showPicker();
+  });
+
   datePicker.append(dateInput);
+  datePicker.append(dateLabel);
 
   return datePicker;
 }
@@ -49,5 +54,6 @@ function getLabelText(date) {
     ? "today"
     : intlFormatDistance(date, new Date());
 
-  return dateDistance[0].toUpperCase() + dateDistance.slice(1);
+  return dateDistance;
+  // return dateDistance[0].toUpperCase() + dateDistance.slice(1);
 }

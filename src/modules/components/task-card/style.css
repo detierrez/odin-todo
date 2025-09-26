@@ -2,8 +2,6 @@
   background-color: rgb(223, 223, 223);
   border-radius: 0.5em;
   padding: 0.5em;
-  border: none;
-  text-align: left;
 
   &:hover {
     background-color: rgb(201, 201, 201);
@@ -16,37 +14,73 @@
 
 .task-card {
   display: grid;
-  gap: 0.2em;
-  justify-content: space-between;
+  /* gap: 0.2em; */
+  justify-content: spaceS-between;
   justify-items: start;
-  grid-template-columns: 1fr max-content;
+  align-items: center;
+  grid-template-columns: max-content min-content 1fr max-content;
   grid-template-areas:
-    "title buttons"
-    "date  ......."
-    "desc  desc   ";
-  > .title {
-    grid-area: title;
+    "check title date delete"
+    "..... desc  desc desc";
+
+  grid-template-rows: min-content minmax(0, 0fr);
+  transition: grid-template-rows 0.5s ease;
+  overflow: hidden;
+
+  &:not(.expanded) {
+    > .description {
+      pointer-events: none;
+
+      opacity: 0;
+    }
   }
 
-  > .buttons-group {
-    grid-area: buttons;
+  &.expanded {
+    grid-template-rows: min-content minmax(0, 1fr);
+  }
+
+  > .title {
+    grid-area: title;
+    align-self: baseline;
+  }
+
+  > .check-button {
+    align-self: center;
+    grid-area: check;
   }
 
   > .date-picker {
     grid-area: date;
+    align-self: baseline;
   }
 
   > .description {
+    align-self: start;
+    opacity: 1;
+    min-width: 0px;
     grid-area: desc;
   }
 }
 
-.task-card > .buttons-group {
-  display: flex;
-  gap: 0.1em;
-  opacity: 0;
+.task-card .title {
+  margin-left: 0.1em;
 }
 
-.task-card:hover > .buttons-group {
+.task-card .date-picker {
+  font-size: 0.8rem;
+  color: #000b;
+}
+
+.task-card .icon-button {
+  border: none;
+  background-color: transparent;
+  opacity: 0;
+  
+  &:hover{
+    background-color: #0006;
+  }
+}
+
+.task-card:hover .icon-button {
   opacity: 1;
 }

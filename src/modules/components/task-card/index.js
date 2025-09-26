@@ -18,6 +18,29 @@ export default function createTaskCard({
   taskCard.className = "task-card";
   taskCard.dataset.taskId = task.id;
   taskCard.classList.add(task.isCompleted ? "completed" : "not-completed");
+  taskCard.addEventListener("click", (event) => {
+    event.currentTarget.classList.toggle("expanded");
+  });
+
+  const [iconA, iconB] = task.isCompleted
+    ? ["notCheck", "check"]
+    : ["check", "notCheck"];
+  const checkButton = createTwoSidedIconButton(iconA, iconB);
+  checkButton.classList.add("check-button");
+  checkButton.dataset.taskId = task.id;
+  checkButton.addEventListener("click", (event) => {
+    taskCard.classList.toggle("completed");
+    taskCard.classList.toggle("not-completed");
+    onCheckClick(event);
+  });
+
+  const deleteButton = createIconButton("trashBin");
+  deleteButton.classList.add("delete-button");
+  deleteButton.dataset.taskId = task.id;
+  deleteButton.addEventListener("click", (event) => {
+    taskCard.remove();
+    onDeleteClick(event);
+  });
 
   taskCard.append(
     createFieldElement({
@@ -30,35 +53,8 @@ export default function createTaskCard({
       },
     })
   );
-
-  const buttonsGroup = document.createElement("div");
-  buttonsGroup.className = "buttons-group";
-
-  {
-    const checkButton = createTwoSidedIconButton("check", "notCheck");
-    checkButton.dataset.taskId = task.id;
-    checkButton.card = taskCard;
-    checkButton.addEventListener("click", (event) => {
-      taskCard.classList.toggle("completed");
-      taskCard.classList.toggle("not-completed");
-      onCheckClick(event);
-    });
-    buttonsGroup.append(checkButton);
-
-    const deleteButton = createIconButton("trashBin");
-    deleteButton.dataset.taskId = task.id;
-    deleteButton.addEventListener(
-      "click",
-      (event) => {
-        taskCard.remove();
-        onDeleteClick(event);
-      },
-      true
-    );
-    buttonsGroup.append(deleteButton);
-  }
-  taskCard.append(buttonsGroup);
-
+  taskCard.append(checkButton);
+  taskCard.append(deleteButton);
   taskCard.append(
     createDatePicker({
       taskId: task.id,
@@ -66,7 +62,6 @@ export default function createTaskCard({
       ...args,
     })
   );
-
   taskCard.append(
     createFieldElement({
       type: "description",
@@ -79,5 +74,10 @@ export default function createTaskCard({
     })
   );
 
+  for (const element of taskCard.children) {
+    element.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  }
   return taskCard;
 }

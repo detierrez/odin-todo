@@ -4,9 +4,7 @@
   border-radius: 0.25em;
   cursor: pointer;
 
-  --horizontal-padding: 0.5em;
-  padding-left: var(--horizontal-padding);
-  padding-right: var(--horizontal-padding);
+  padding: 0.2em 0.4em;
   
   &:focus {
     cursor: text;

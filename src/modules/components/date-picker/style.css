@@ -1,5 +1,4 @@
-.date-picker {
-  /* max-width: 7em; */
+/* .date-picker {
   width: max-content;
   display: flex;
   align-items: center;
@@ -25,14 +24,31 @@
     }
   }
 
-  /* .date-formatted {
-    font-size: 0.8rem;
-    color: rgba(0, 0, 0, 0.4);
-  } */
-
   .date-distance,
   .date-formatted {
     font-size: 0.8rem;
     color: rgba(0, 0, 0, 0.6);
   }
+} */
+
+.date-picker {
+  cursor: pointer;
+  position: relative;
+  input {
+    position: absolute;
+    visibility: hidden;
+  }
 }
+
+/* input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+} */
