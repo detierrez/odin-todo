@@ -16,13 +16,9 @@ export default function createTaskView({
     addTaskToList(task, taskList, args);
   };
 
-  const addComponent = createIconButton("plus");
-  addComponent.addEventListener("click", addTaskOnEvent);
-
-  taskView.append(addComponent);
   taskView.append(taskList);
 
-  return taskView;
+  return {taskView, addTaskOnEvent};
 }
 
 function createTaskList({ tasks, ...args }) {
@@ -42,4 +38,5 @@ function createTaskList({ tasks, ...args }) {
 function addTaskToList(task, taskList, args) {
   const taskCard = createTaskCard({ task, ...args });
   taskList.insertBefore(taskCard, taskList.firstChild);
+  taskCard.querySelector(".title").focus();
 }

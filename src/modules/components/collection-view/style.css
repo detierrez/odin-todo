@@ -9,4 +9,10 @@
   .description {
     min-height: 3em;
   }
+
+  .add-button {
+    position: fixed;
+    bottom: 10%;
+    right: 40%;
+  }
 }

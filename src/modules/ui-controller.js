@@ -7,11 +7,13 @@ const collections = app.getCollections();
 const projects = app.getProjects();
 
 const bodyArgs = {
+  getDefaultCollection,
   getCollectionFromEvent,
-  updateProjectFromEvent,
   createProjectFromEvent,
-  collections,
-  projects,
+  updateProjectFromEvent,
+  deleteProjectFromEvent,
+  getCollections,
+  getProjects,
   createTaskFromEvent,
   onCheckClick,
   onDeleteClick,
@@ -20,9 +22,7 @@ const bodyArgs = {
 };
 
 const bodyComponent = createBody(bodyArgs);
-
 document.body.append(bodyComponent);
-document.querySelector("button").click();
 
 function getCollectionFromEvent(event) {
   const { collectionType, collectionId } = event.currentTarget.dataset;
@@ -77,3 +77,20 @@ function updateProjectFromEvent(event) {
   const { collectionId, collectionProperty } = target.dataset;
   app.updateProject(collectionId, { [collectionProperty]: target.value });
 }
+
+function deleteProjectFromEvent(event) {
+  app.deleteProject(event.currentTarget.dataset.collectionId);
+}
+
+function getDefaultCollection() {
+  return app.getCollection("all");
+}
+
+function getCollections() {
+  return app.getCollections();
+}
+
+function getProjects() {
+  return app.getProjects();
+}
+

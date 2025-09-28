@@ -25,5 +25,13 @@ export default function createFieldElement({
     element.addEventListener("change", onValueChange);
   }
 
+  if (type === "title") {
+    element.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.currentTarget.blur();
+      }
+    });
+  }
+
   return element;
 }

@@ -2,10 +2,10 @@ import createIconButton from "../icon-button";
 import "./style.css";
 
 export default function createSidebar({
-  collections,
-  projects,
+  getCollections,
+  getProjects,
   onCollectionClick,
-  createProjectFromEvent,
+  onProjectAdd,
   ...args
 }) {
   const sidebar = document.createElement("aside");
@@ -15,7 +15,7 @@ export default function createSidebar({
   collectionsContainer.classList.add("collections-container");
   collectionsContainer.innerHTML = "<h2>Collections</h2>";
 
-  for (const collection of collections) {
+  for (const collection of getCollections()) {
     collectionsContainer.append(
       createCollectionButton(collection, "collection", onCollectionClick)
     );
@@ -28,16 +28,11 @@ export default function createSidebar({
   titleContainer.classList.add("title-container");
   titleContainer.innerHTML = "<span>Projects</span>";
   const addProjectButton = createIconButton("plus");
-  addProjectButton.addEventListener("click", (event) => {
-    const project = createProjectFromEvent(event);
-    projectsContainer.append(
-      createCollectionButton(project, "project", onCollectionClick)
-    );
-  });
+  addProjectButton.addEventListener("click", onProjectAdd);
   titleContainer.append(addProjectButton);
 
   projectsContainer.append(titleContainer);
-  for (const project of projects) {
+  for (const project of getProjects()) {
     projectsContainer.append(
       createCollectionButton(project, "project", onCollectionClick)
     );

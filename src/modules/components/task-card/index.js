@@ -14,7 +14,7 @@ export default function createTaskCard({
   onValueChange,
   ...args
 }) {
-  const taskCard = document.createElement("button");
+  const taskCard = document.createElement("div");
   taskCard.className = "task-card";
   taskCard.dataset.taskId = task.id;
   taskCard.classList.add(task.isCompleted ? "completed" : "not-completed");
