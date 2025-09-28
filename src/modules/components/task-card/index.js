@@ -1,8 +1,6 @@
 import "./style.css";
 import createDatePicker from "../date-picker";
-import createIconButton, {
-  createTwoSidedIconButton,
-} from "../icon-button";
+import createIconButton, { createTwoSidedIconButton } from "../icon-button";
 import createFieldElement from "../field-element";
 
 export default function createTaskCard({
@@ -18,6 +16,32 @@ export default function createTaskCard({
   taskCard.classList.add(task.isCompleted ? "completed" : "not-completed");
   taskCard.addEventListener("click", (event) => {
     event.currentTarget.classList.toggle("expanded");
+  });
+
+  const title = createFieldElement({
+    type: "title",
+    value: task.title,
+    onValueChange,
+    dataset: {
+      taskId: task.id,
+      taskProperty: "title",
+    },
+  });
+
+  const datePicker = createDatePicker({
+    taskId: task.id,
+    date: task.dueDate,
+    ...args,
+  });
+
+  const description = createFieldElement({
+    type: "description",
+    value: task.description,
+    onValueChange,
+    dataset: {
+      taskId: task.id,
+      taskProperty: "description",
+    },
   });
 
   const [iconA, iconB] = task.isCompleted
@@ -40,37 +64,11 @@ export default function createTaskCard({
     onDeleteClick(event);
   });
 
-  taskCard.append(
-    createFieldElement({
-      type: "title",
-      value: task.title,
-      onValueChange,
-      dataset: {
-        taskId: task.id,
-        taskProperty: "title",
-      },
-    })
-  );
+  taskCard.append(title);
   taskCard.append(checkButton);
   taskCard.append(deleteButton);
-  taskCard.append(
-    createDatePicker({
-      taskId: task.id,
-      date: task.dueDate,
-      ...args,
-    })
-  );
-  taskCard.append(
-    createFieldElement({
-      type: "description",
-      value: task.description,
-      onValueChange,
-      dataset: {
-        taskId: task.id,
-        taskProperty: "description",
-      },
-    })
-  );
+  taskCard.append(datePicker);
+  taskCard.append(description);
 
   for (const element of taskCard.children) {
     element.addEventListener("click", (event) => {
