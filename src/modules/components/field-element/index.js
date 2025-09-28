@@ -26,6 +26,7 @@ export default function createFieldElement({
   }
 
   if (type === "title") {
+    element.setAttribute("maxlength", "20")
     element.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.currentTarget.blur();
