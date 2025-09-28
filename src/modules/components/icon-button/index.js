@@ -11,7 +11,7 @@ const iconsByName = {
   plus,
 };
 
-export default function createIconButton(iconName) {
+export function createIconButton(iconName) {
   const iconButton = document.createElement("button");
   iconButton.classList.add("icon-button");
 

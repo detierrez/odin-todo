@@ -1,6 +1,6 @@
 import "./style.css";
 import createDatePicker from "../date-picker";
-import createIconButton, { createTwoSidedIconButton } from "../icon-button";
+import { createIconButton, createTwoSidedIconButton } from "../icon-button";
 import createFieldElement from "../field-element";
 
 export default function createTaskCard({

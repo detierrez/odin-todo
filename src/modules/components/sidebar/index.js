@@ -1,4 +1,4 @@
-import createIconButton from "../icon-button";
+import {createIconButton} from "../icon-button";
 import "./style.css";
 
 export default function createSidebar({

@@ -1,7 +1,7 @@
 import "./style.css";
 import createTaskView from "../task-view";
 import createFieldElement from "../field-element";
-import createIconButton from "../icon-button";
+import {createIconButton} from "../icon-button";
 
 export default function createCollectionView({
   collection,
