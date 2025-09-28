@@ -1,26 +1,11 @@
 import "./style.css";
 import createTaskCard from "../task-card";
 
-export default function createTaskView({
+export default function createTaskList({
   tasks,
   createTaskFromEvent,
   ...args
 }) {
-  const taskView = document.createElement("div");
-  taskView.classList.add("task-view");
-
-  const taskList = createTaskList({ tasks, ...args });
-  const addTaskOnEvent = function (event) {
-    const task = createTaskFromEvent(event);
-    addTaskToList(task, taskList, args);
-  };
-
-  taskView.append(taskList);
-
-  return {taskView, addTaskOnEvent};
-}
-
-function createTaskList({ tasks, ...args }) {
   const taskList = document.createElement("div");
   taskList.classList.add("task-list");
 
@@ -31,7 +16,12 @@ function createTaskList({ tasks, ...args }) {
     taskList.append(createTaskCard({ task, ...args }));
   }
 
-  return taskList;
+  const addTaskOnEvent = function (event) {
+    const task = createTaskFromEvent(event);
+    addTaskToList(task, taskList, args);
+  };
+
+  return {taskList, addTaskOnEvent};
 }
 
 function addTaskToList(task, taskList, args) {

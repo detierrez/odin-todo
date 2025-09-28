@@ -21,20 +21,3 @@ function makeClassIndexer(targetClass) {
 }
 
 export default makeClassIndexer;
-
-// class Example {
-//   constructor({ foo = "Hello", bar = "World" } = {}) {
-//     this.id = crypto.randomUUID();
-//     this.foo = foo;
-//     this.bar = bar;
-//   }
-// }
-
-// Object.assign(Example, IndexingObject);
-
-// const createdinstance = Example.create({ foo: "hi", bar: "planet" });
-// const gottenInstance = Example.get(createdinstance.id);
-// const allInstances = Example.getAll();
-
-// console.dir(Example);
-// console.dir({ createdinstance, gottenInstance, allInstances });

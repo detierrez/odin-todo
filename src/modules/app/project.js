@@ -8,6 +8,7 @@ import {
   startOfTomorrow,
 } from "date-fns";
 
+import { v4 as uuidv4 } from "uuid";
 import { Task } from "./task";
 import makeClassIndexer from "./indexer";
 
@@ -17,7 +18,7 @@ export class Collection {
     title = "Inbox",
     description = "All of your tasks",
   } = {}) {
-    this.id = id || crypto.randomUUID();
+    this.id = id;
     this.title = title;
     this.description = description;
   }
@@ -44,7 +45,7 @@ export class Collection {
 }
 
 export class Project extends Collection {
-  constructor({ id = crypto.randomUUID(), title = "", description, ownedTasksIds }) {
+  constructor({ id = uuidv4(), title = "", description, ownedTasksIds }) {
     super({ id, title, description });
     this.ownedTasksIds = new Set(ownedTasksIds);
   }

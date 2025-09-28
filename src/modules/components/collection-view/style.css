@@ -1,18 +1,58 @@
 .collection-view {
   max-width: 350px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 1em;
   padding: 1em;
 
-  .description {
-    min-height: 3em;
+  > .title {
+    font-size: 1.5rem;
   }
 
   .add-button {
-    position: fixed;
-    bottom: 10%;
-    right: 40%;
+    margin-right: 0.5em;
+    margin-bottom: 3em;
+    width: 3em;
+    background-color: rgb(73, 119, 73);
+    border: none;
+    img {
+      filter: none;
+    }
+  }
+
+  .delete-button {
+    background-color: transparent;
+
+    &:hover {
+      background-color: #0006;
+    }
+  }
+}
+
+.collection-view {
+  display: grid;
+  grid-template-areas:
+    "title delete"
+    "list  list  ";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content 1fr;
+  gap: 1em;
+
+  .title {
+    align-self: center;
+    grid-area: title;
+  }
+  .delete-button {
+    align-self: center;
+
+    justify-self: end;
+    grid-area: delete;
+  }
+
+  .task-list {
+    grid-area: list;
+  }
+
+  .add-button {
+    justify-self: end;
+    align-self: end;
+    grid-area: -2 / -2 / span 1 / span 1;
   }
 }

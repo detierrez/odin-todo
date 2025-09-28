@@ -1,10 +1,12 @@
 import "./style.css";
-import createTaskView from "../task-view";
+import createTaskList from "../task-list";
 import createFieldElement from "../field-element";
-import {createIconButton} from "../icon-button";
+import { createIconButton } from "../icon-button";
+import { isLeapYearWithOptions } from "date-fns/fp";
 
 export default function createCollectionView({
   collection,
+  isProject,
   onAddClick,
   onProjectDelete,
   onProjectChange,
@@ -13,38 +15,47 @@ export default function createCollectionView({
   const collectionView = document.createElement("div");
   collectionView.className = "collection-view";
 
+  let titleArgs;
+  let deleteButton;
+  if (isProject(collection)) {
+    deleteButton = createIconButton("trashBin");
+    deleteButton.dataset.collectionId = collection.id;
+    deleteButton.classList.add("delete-button");
+    deleteButton.addEventListener("click", onProjectDelete);
+    collectionView.append(deleteButton);
+
+    titleArgs = {
+      onValueChange: onProjectChange,
+      dataset: {
+        collectionId: collection.id,
+        collectionProperty: "title",
+      },
+    };
+  } else {
+    titleArgs = {
+      isReadOnly: true,
+    };
+  }
+
   const title = createFieldElement({
     type: "title",
     value: collection.title,
-    onValueChange: onProjectChange,
-    dataset: {
-      collectionId: collection.id,
-      collectionProperty: "title",
-    },
+    ...titleArgs,
   });
 
-  const description = document.createElement("p");
-  description.textContent = collection.description;
-  description.className = "description";
-
-  const { taskView, addTaskOnEvent } = createTaskView({
+  const { taskList, addTaskOnEvent } = createTaskList({
     tasks: collection.tasks,
     ...args,
   });
-
-  const deleteButton = createIconButton("trashBin");
-  deleteButton.dataset.collectionId = collection.id;
-  deleteButton.classList.add("delete-button");
-  deleteButton.addEventListener("click", onProjectDelete);
 
   const addButton = createIconButton("plus");
   addButton.classList.add("add-button");
   addButton.addEventListener("click", addTaskOnEvent);
 
   collectionView.append(title);
-  collectionView.append(deleteButton);
-  collectionView.append(taskView);
+  collectionView.append(taskList);
   collectionView.append(addButton);
+  if (deleteButton) collectionView.append(deleteButton);
 
   return collectionView;
 }

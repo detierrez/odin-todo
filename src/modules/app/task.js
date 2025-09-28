@@ -1,15 +1,16 @@
 import makeClassIndexer from "./indexer";
+import { v4 as uuidv4 } from "uuid";
 
 export class Task {
   constructor({
+    id = uuidv4(),
     title = "Task title",
     description = "Task description",
     dueDate = new Date(),
     priority = "normal",
     isCompleted = false,
-    id,
   } = {}) {
-    this.id = id || crypto.randomUUID();
+    this.id = id;
     this.title = title;
     this.description = description;
     this.dueDate = new Date(dueDate);
@@ -34,4 +35,3 @@ export class Task {
 }
 
 makeClassIndexer(Task);
-

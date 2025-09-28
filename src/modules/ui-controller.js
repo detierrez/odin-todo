@@ -3,12 +3,10 @@ import createBody from "./components/body";
 
 let currentCollection;
 
-const collections = app.getCollections();
-const projects = app.getProjects();
-
 const bodyArgs = {
   getDefaultCollection,
   getCollectionFromEvent,
+  isProject,
   createProjectFromEvent,
   updateProjectFromEvent,
   deleteProjectFromEvent,
@@ -65,6 +63,10 @@ function createTaskFromEvent(event) {
   return task;
 }
 
+function isProject(collection) {
+  return app.isProject(collection);
+}
+
 function createProjectFromEvent(event) {
   const args = {};
   const project = app.createProject(args);
@@ -93,4 +95,3 @@ function getCollections() {
 function getProjects() {
   return app.getProjects();
 }
-
