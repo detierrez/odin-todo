@@ -1,8 +1,6 @@
 import "./style.css";
 import createDatePicker from "../date-picker";
 import createIconButton, {
-  createCheckButton,
-  createDeleteButton,
   createTwoSidedIconButton,
 } from "../icon-button";
 import createFieldElement from "../field-element";

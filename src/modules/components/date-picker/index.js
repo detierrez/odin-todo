@@ -1,6 +1,5 @@
 import "./style.css";
-import { format, intlFormat, intlFormatDistance, isToday } from "date-fns";
-import app from "../../app";
+import { format, intlFormatDistance, isToday } from "date-fns";
 
 export default function createDatePicker({
   taskId,

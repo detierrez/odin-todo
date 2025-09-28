@@ -1,6 +1,5 @@
 import "./style.css";
 import createTaskCard from "../task-card";
-import createIconButton from "../icon-button";
 
 export default function createTaskView({
   tasks,
