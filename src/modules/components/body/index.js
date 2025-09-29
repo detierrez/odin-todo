@@ -3,11 +3,11 @@ import createSidebar from "../sidebar";
 import createCollectionView from "../collection-view";
 
 export default function createBody({
+  getDefaultCollection,
+  getCollectionFromEvent,
   createProjectFromEvent,
   updateProjectFromEvent,
   deleteProjectFromEvent,
-  getDefaultCollection,
-  getCollectionFromEvent,
   ...args
 }) {
   const body = document.createElement("div");

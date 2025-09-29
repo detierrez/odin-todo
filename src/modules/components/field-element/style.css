@@ -34,10 +34,40 @@
   background-color: transparent;
 }
 
-/* select.field-element {
+select.field-element,
+.field-element::picker(select) {
+  appearance: base-select;
+}
 
-  &:hover{
-    background-color: red;
-    cursor:ew-resize;
+select.field-element {
+  display: flex;
+  padding-bottom: 0px;
+  &::picker-icon {
+    padding: 2px 2px 0px;
+    color: #0009;
+    rotate: 30deg;
+    transition: 150ms rotate;
   }
-} */
+
+  &:open::picker-icon {
+    rotate: 120deg;
+  }
+
+  > option {
+    border-radius: 0.25em;
+    margin: 0.4em;
+    border: none;
+    outline: none;
+  }
+
+  > option::checkmark {
+    margin-left: auto;
+    order: 1;
+  }
+}
+
+.field-element::picker(select) {
+  border-radius: inherit;
+  border: none;
+  outline: none;
+}

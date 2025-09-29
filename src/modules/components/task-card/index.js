@@ -5,10 +5,12 @@ import createFieldElement, { createSelect } from "../field-element";
 
 export default function createTaskCard({
   task,
+  getProjectFromTask,
   getProjects,
   onCheckClick,
   onDeleteClick,
   onValueChange,
+  onProjectChange,
   ...args
 }) {
   const taskCard = document.createElement("div");
@@ -35,10 +37,24 @@ export default function createTaskCard({
     ...args,
   });
 
-  const projects = getProjects().map((project) => project.title);
-  console.log(projects);
-  const projectPicker = createSelect(projects, "Personal");
+  const projects = getProjects().map((project) => ({
+    value: project.id,
+    text: project.title,
+  }));
+  const owningProject = getProjectFromTask(task.id);
+  const selectedValue = owningProject ? owningProject.id : "";
+  const projectPicker = createSelect(
+    {
+      value: "",
+      text: "No project",
+    },
+    projects,
+    selectedValue
+  );
   projectPicker.classList.add("project-picker");
+  projectPicker.dataset.taskId = task.id;
+  console.log(onProjectChange);
+  projectPicker.addEventListener("change", onProjectChange);
 
   const description = createFieldElement({
     type: "description",

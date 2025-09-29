@@ -10,6 +10,7 @@ const bodyArgs = {
   createProjectFromEvent,
   updateProjectFromEvent,
   deleteProjectFromEvent,
+  getProjectFromTask,
   getCollections,
   getProjects,
   createTaskFromEvent,
@@ -17,6 +18,7 @@ const bodyArgs = {
   onDeleteClick,
   onValueChange,
   onDateChange,
+  onProjectChange,
 };
 
 const bodyComponent = createBody(bodyArgs);
@@ -67,6 +69,11 @@ function isProject(collection) {
   return app.isProject(collection);
 }
 
+function getProjectFromTask(taskId) {
+  // const { taskId } = event.currentTarget.dataset;
+  return app.getProjectFromTask(taskId);
+}
+
 function createProjectFromEvent(event) {
   const args = {};
   const project = app.createProject(args);
@@ -94,4 +101,19 @@ function getCollections() {
 
 function getProjects() {
   return app.getProjects();
+}
+
+function onProjectChange(event) {
+  const target = event.currentTarget;
+  const { taskId } = target.dataset;
+
+  const oldProject = app.getProjectFromTask(taskId);
+  if (oldProject) {
+    app.removeTaskFromProject(taskId, oldProject.id);
+  }
+
+  const newProjectId = event.currentTarget.value;
+  if (!newProjectId) {
+    app.addTaskToProject(taskId, newProjectId);
+  }
 }

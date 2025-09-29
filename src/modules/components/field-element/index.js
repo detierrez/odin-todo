@@ -37,17 +37,25 @@ export default function createFieldElement({
   return element;
 }
 
-export function createSelect(options, selected) {
+export function createSelect(defaultOption, options, selectedValue) {
   const select = document.createElement("select");
   select.classList.add("field-element");
 
-  for (const option of options) {
-    console.log(option);
-    const element = document.createElement("option");
-    element.textContent = option;
-    if (option === selected) element.setAttribute("selected", "");
-    select.append(element);
+  const { value, text } = defaultOption;
+  select.append(createOption(value, text, value === selectedValue));
+
+  for (const { value, text } of options) {
+    select.append(createOption(value, text, value === selectedValue));
   }
 
   return select;
+}
+
+function createOption(value, text, isSelected) {
+  const option = document.createElement("option");
+  option.textContent = text;
+  option.value = value;
+  if (isSelected) option.setAttribute("selected", "");
+
+  return option;
 }

@@ -37,7 +37,6 @@ class Application {
 
   deleteTask(id) {
     const task = Task.get(id);
-    console.log(id);
     Task.remove(task.id);
     Storage.remove(task);
     const allProjects = Project.getAll();
@@ -59,6 +58,15 @@ class Application {
     const project = Project.get(id);
 
     return project;
+  }
+
+  getProjectFromTask(id) {
+    for (const project of Project.getAll()) {
+      if (project.has(id)) {
+        return project;
+      }
+    }
+    return null;
   }
 
   getProjects() {

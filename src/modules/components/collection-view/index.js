@@ -2,7 +2,6 @@ import "./style.css";
 import createTaskList from "../task-list";
 import createFieldElement from "../field-element";
 import { createIconButton } from "../icon-button";
-import { isLeapYearWithOptions } from "date-fns/fp";
 
 export default function createCollectionView({
   collection,
@@ -53,9 +52,9 @@ export default function createCollectionView({
   addButton.addEventListener("click", addTaskOnEvent);
 
   collectionView.append(title);
+  if (deleteButton) collectionView.append(deleteButton);
   collectionView.append(taskList);
   collectionView.append(addButton);
-  if (deleteButton) collectionView.append(deleteButton);
 
   return collectionView;
 }
