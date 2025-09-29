@@ -26,7 +26,7 @@ export default function createFieldElement({
   }
 
   if (type === "title") {
-    element.setAttribute("maxlength", "20")
+    element.setAttribute("maxlength", "20");
     element.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.currentTarget.blur();
@@ -35,4 +35,19 @@ export default function createFieldElement({
   }
 
   return element;
+}
+
+export function createSelect(options, selected) {
+  const select = document.createElement("select");
+  select.classList.add("field-element");
+
+  for (const option of options) {
+    console.log(option);
+    const element = document.createElement("option");
+    element.textContent = option;
+    if (option === selected) element.setAttribute("selected", "");
+    select.append(element);
+  }
+
+  return select;
 }

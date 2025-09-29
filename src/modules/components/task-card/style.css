@@ -22,10 +22,11 @@
   align-items: center;
   grid-template-columns: max-content min-content 1fr max-content;
   grid-template-areas:
-    "check title date delete"
-    "..... desc  desc desc";
+    "check title   date delete"
+    "..... project .... ......"
+    "..... desc    desc desc  ";
 
-  grid-template-rows: min-content minmax(0, 0fr);
+  grid-template-rows: times(3, max-content);
   transition: grid-template-rows 0.5s ease;
   overflow: hidden;
 
@@ -33,7 +34,7 @@
     > .description {
       pointer-events: none;
 
-      opacity: 0;
+      /* opacity: 0; */
     }
   }
 
@@ -64,6 +65,10 @@
     opacity: 1;
     min-width: 0px;
     grid-area: desc;
+  }
+
+  > .project-picker {
+    grid-area: project;
   }
 }
 

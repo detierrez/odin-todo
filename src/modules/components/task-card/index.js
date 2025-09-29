@@ -1,10 +1,11 @@
 import "./style.css";
 import createDatePicker from "../date-picker";
 import { createIconButton, createTwoSidedIconButton } from "../icon-button";
-import createFieldElement from "../field-element";
+import createFieldElement, { createSelect } from "../field-element";
 
 export default function createTaskCard({
   task,
+  getProjects,
   onCheckClick,
   onDeleteClick,
   onValueChange,
@@ -33,6 +34,11 @@ export default function createTaskCard({
     date: task.dueDate,
     ...args,
   });
+
+  const projects = getProjects().map((project) => project.title);
+  console.log(projects);
+  const projectPicker = createSelect(projects, "Personal");
+  projectPicker.classList.add("project-picker");
 
   const description = createFieldElement({
     type: "description",
@@ -68,6 +74,7 @@ export default function createTaskCard({
   taskCard.append(checkButton);
   taskCard.append(deleteButton);
   taskCard.append(datePicker);
+  taskCard.append(projectPicker);
   taskCard.append(description);
 
   for (const element of taskCard.children) {
