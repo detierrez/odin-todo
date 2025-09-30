@@ -98,9 +98,8 @@ class Application {
   }
 
   removeTaskFromProject(taskId, projectId) {
-    const task = Task.get(taskId);
     const project = Project.get(projectId);
-    project.remove(task);
+    project.remove(taskId);
     Storage.save(project);
   }
 

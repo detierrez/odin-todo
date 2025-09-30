@@ -18,7 +18,7 @@ const bodyArgs = {
   onDeleteClick,
   onValueChange,
   onDateChange,
-  onProjectChange,
+  onTaskChangeProject,
 };
 
 const bodyComponent = createBody(bodyArgs);
@@ -103,7 +103,7 @@ function getProjects() {
   return app.getProjects();
 }
 
-function onProjectChange(event) {
+function onTaskChangeProject(event) {
   const target = event.currentTarget;
   const { taskId } = target.dataset;
 
@@ -113,7 +113,7 @@ function onProjectChange(event) {
   }
 
   const newProjectId = event.currentTarget.value;
-  if (!newProjectId) {
+  if (newProjectId) {
     app.addTaskToProject(taskId, newProjectId);
   }
 }

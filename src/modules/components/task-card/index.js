@@ -10,7 +10,7 @@ export default function createTaskCard({
   onCheckClick,
   onDeleteClick,
   onValueChange,
-  onProjectChange,
+  onTaskChangeProject,
   ...args
 }) {
   const taskCard = document.createElement("div");
@@ -53,8 +53,7 @@ export default function createTaskCard({
   );
   projectPicker.classList.add("project-picker");
   projectPicker.dataset.taskId = task.id;
-  console.log(onProjectChange);
-  projectPicker.addEventListener("change", onProjectChange);
+  projectPicker.addEventListener("change", onTaskChangeProject);
 
   const description = createFieldElement({
     type: "description",
