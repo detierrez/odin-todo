@@ -4,6 +4,7 @@
   border-radius: 0.5em;
   padding: 0.5em;
   border: none;
+  user-select: none;
 
   &:hover {
     background-color: rgb(201, 201, 201);
@@ -20,13 +21,13 @@
   justify-content: space-between;
   justify-items: start;
   align-items: center;
-  grid-template-columns: max-content min-content 1fr max-content;
+  grid-template-columns: max-content min-content max-content 1fr max-content;
   grid-template-areas:
-    "check title   date delete"
-    "..... project project ......"
-    "..... desc    desc desc  ";
+    "check title date expand delete"
+    "..... prjc  prjc prjc   ......"
+    "..... desc  desc desc   ......";
 
-  grid-template-rows: min-content repeat(2, minmax(0, 0fr));
+  grid-template-rows: min-content minmax(0, 0fr) minmax(0, 0fr);
   transition: grid-template-rows 0.5s ease;
   overflow: hidden;
 
@@ -39,21 +40,25 @@
   }
 
   &.expanded {
-    grid-template-rows: min-content repeat(2, minmax(0, 1fr));
-  }
-
-  > .title {
-    grid-area: title;
-    align-self: baseline;
+    grid-template-rows: min-content minmax(0, 1fr) minmax(0, 1fr);
   }
 
   > .check-button {
     grid-area: check;
   }
+  > .title {
+    grid-area: title;
+    align-self: baseline;
+  }
 
   > .date-picker {
     align-self: baseline;
     grid-area: date;
+  }
+
+  > .expand-button {
+    justify-self: start;
+    grid-area: expand;
   }
 
   > .delete-button {
@@ -69,7 +74,7 @@
 
   > .project-picker {
     opacity: 1;
-    grid-area: project;
+    grid-area: prjc;
   }
 }
 
@@ -99,4 +104,11 @@
 
 .task-card select {
   min-width: 7em;
+}
+
+.task-card .expand-button > img {
+  transition: 150ms transform;
+}
+.task-card.expanded .expand-button > img {
+  transform: rotate(90deg);
 }

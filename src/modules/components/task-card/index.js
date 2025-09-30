@@ -17,9 +17,7 @@ export default function createTaskCard({
   taskCard.className = "task-card";
   taskCard.dataset.taskId = task.id;
   taskCard.classList.add(task.isCompleted ? "completed" : "not-completed");
-  taskCard.addEventListener("click", (event) => {
-    event.currentTarget.classList.toggle("expanded");
-  });
+  taskCard.addEventListener("click", (event) => {});
 
   const title = createFieldElement({
     type: "title",
@@ -35,6 +33,12 @@ export default function createTaskCard({
     taskId: task.id,
     date: task.dueDate,
     ...args,
+  });
+
+  const expandButton = createIconButton("arrow");
+  expandButton.classList.add("expand-button");
+  expandButton.addEventListener("click", (event) => {
+    taskCard.classList.toggle("expanded");
   });
 
   const projects = getProjects().map((project) => ({
@@ -85,12 +89,13 @@ export default function createTaskCard({
     onDeleteClick(event);
   });
 
-  taskCard.append(title);
   taskCard.append(checkButton);
-  taskCard.append(deleteButton);
+  taskCard.append(title);
   taskCard.append(datePicker);
+  taskCard.append(expandButton);
   taskCard.append(projectPicker);
   taskCard.append(description);
+  taskCard.append(deleteButton);
 
   for (const element of taskCard.children) {
     element.addEventListener("click", (event) => {

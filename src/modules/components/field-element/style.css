@@ -39,18 +39,21 @@ select.field-element,
   appearance: base-select;
 }
 
+select.field-element::picker-icon {
+  content: url("@icons/arrow.svg");
+  filter: brightness(0.3);
+  height: 24px;
+}
+
 select.field-element {
   display: flex;
-  padding-bottom: 0px;
   &::picker-icon {
-    padding: 2px 2px 0px;
     color: #0009;
-    rotate: 30deg;
-    transition: 150ms rotate;
+    transition: 150ms transform;
   }
 
   &:open::picker-icon {
-    rotate: 120deg;
+    transform: rotate(90deg);
   }
 
   > option {

@@ -3,12 +3,14 @@ import trashBin from "@icons/trash-bin.svg";
 import check from "@icons/check.svg";
 import notCheck from "@icons/not-check.svg";
 import plus from "@icons/plus.svg";
+import arrow from "@icons/arrow.svg";
 
 const iconsByName = {
   trashBin,
   check,
   notCheck,
   plus,
+  arrow,
 };
 
 export function createIconButton(iconName) {
@@ -40,7 +42,7 @@ export function createLabeledButton(iconName, labelText) {
 
   const button = createIconButton(iconName);
 
-  label.append(button)
+  label.append(button);
 
   return label;
 }
