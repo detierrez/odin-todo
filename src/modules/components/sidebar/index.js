@@ -6,7 +6,6 @@ export default function createSidebar({
   getProjects,
   onCollectionClick,
   onProjectAdd,
-  ...args
 }) {
   const sidebar = document.createElement("aside");
   sidebar.classList.add("sidebar");
