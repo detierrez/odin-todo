@@ -6,7 +6,6 @@ import { createIconButton } from "../icon-button";
 export default function createCollectionView({
   collection,
   isProject,
-  onAddClick,
   onProjectDelete,
   onProjectChange,
   ...args
