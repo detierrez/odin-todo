@@ -1,5 +1,21 @@
 .app-body {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: min-content 1fr;
+  display: flex;
+  /* grid-template-columns: minmax(150px, 1fr) 3fr; */
+
+  justify-content: start;
+}
+
+.app-body > .main {
+  flex: 10 1 0;
+}
+
+.app-body > .sidebar {
+  flex: 1 1 0;
+  background-color: rgb(19, 20, 20);
+}
+
+.app-body {
+  background: #1b2325;
+  /* background: linear-gradient(149deg, rgba(30, 116, 150, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%); */
 }

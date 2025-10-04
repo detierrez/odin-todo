@@ -10,9 +10,11 @@ export default function createSidebar({
   const sidebar = document.createElement("aside");
   sidebar.classList.add("sidebar");
 
+  const pageTitle = document.createElement("h1")
+  pageTitle.innerHTML = "<a href=''>Dew it</a>"
+
   const collectionsContainer = document.createElement("div");
   collectionsContainer.classList.add("collections-container");
-  collectionsContainer.innerHTML = "<h2>Collections</h2>";
 
   for (const collection of getCollections()) {
     collectionsContainer.append(
@@ -25,7 +27,7 @@ export default function createSidebar({
 
   const titleContainer = document.createElement("div");
   titleContainer.classList.add("title-container");
-  titleContainer.innerHTML = "<span>Projects</span>";
+  titleContainer.innerHTML = "<h2>Projects</h2>";
   const addProjectButton = createIconButton("plus");
   addProjectButton.addEventListener("click", onProjectAdd);
   titleContainer.append(addProjectButton);
@@ -37,6 +39,7 @@ export default function createSidebar({
     );
   }
 
+  sidebar.append(pageTitle)
   sidebar.appendChild(collectionsContainer);
   sidebar.appendChild(projectsContainer);
 

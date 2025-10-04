@@ -19,6 +19,18 @@ export default function createTaskCard({
   taskCard.classList.add(task.isCompleted ? "completed" : "not-completed");
   taskCard.addEventListener("click", (event) => {});
 
+  const [iconA, iconB] = task.isCompleted
+    ? ["notCheck", "check"]
+    : ["check", "notCheck"];
+  const checkButton = createTwoSidedIconButton(iconA, iconB);
+  checkButton.classList.add("check-button");
+  checkButton.dataset.taskId = task.id;
+  checkButton.addEventListener("click", (event) => {
+    taskCard.classList.toggle("completed");
+    taskCard.classList.toggle("not-completed");
+    onCheckClick(event);
+  });
+
   const title = createFieldElement({
     type: "title",
     value: task.title,
@@ -40,6 +52,17 @@ export default function createTaskCard({
   expandButton.addEventListener("click", (event) => {
     taskCard.classList.toggle("expanded");
   });
+
+  const deleteButton = createIconButton("trashBin");
+  deleteButton.classList.add("delete-button");
+  deleteButton.dataset.taskId = task.id;
+  deleteButton.addEventListener("click", (event) => {
+    taskCard.remove();
+    onDeleteClick(event);
+  });
+
+  const collapsableContainer = document.createElement("div");
+  collapsableContainer.classList.add("collapsable");
 
   const projects = getProjects().map((project) => ({
     value: project.id,
@@ -69,33 +92,15 @@ export default function createTaskCard({
     },
   });
 
-  const [iconA, iconB] = task.isCompleted
-    ? ["notCheck", "check"]
-    : ["check", "notCheck"];
-  const checkButton = createTwoSidedIconButton(iconA, iconB);
-  checkButton.classList.add("check-button");
-  checkButton.dataset.taskId = task.id;
-  checkButton.addEventListener("click", (event) => {
-    taskCard.classList.toggle("completed");
-    taskCard.classList.toggle("not-completed");
-    onCheckClick(event);
-  });
-
-  const deleteButton = createIconButton("trashBin");
-  deleteButton.classList.add("delete-button");
-  deleteButton.dataset.taskId = task.id;
-  deleteButton.addEventListener("click", (event) => {
-    taskCard.remove();
-    onDeleteClick(event);
-  });
+  taskCard.append(projectPicker)
+  taskCard.append(description)
 
   taskCard.append(checkButton);
   taskCard.append(title);
   taskCard.append(datePicker);
   taskCard.append(expandButton);
-  taskCard.append(projectPicker);
-  taskCard.append(description);
   taskCard.append(deleteButton);
+  // taskCard.append(collapsableContainer)
 
   for (const element of taskCard.children) {
     element.addEventListener("click", (event) => {

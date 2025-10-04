@@ -1,37 +1,59 @@
 .sidebar {
-  max-width: 250px;
-  background: #f8f9fa;
-  padding: 1rem;
-  border-right: 1px solid #ddd;
+  max-width: 300px;
+  padding: 3em;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
+h1 {
+  font-family: "Quantico";
+  font-weight: bold;
+  font-style: italic;
+
+  a {
+    text-decoration: inherit;
+    color: inherit;
+  }
+
+  a:hover {
+    text-decoration: revert;
+  }
+}
+
 .sidebar h2 {
   margin-top: 0;
   font-size: 1.1rem;
-  color: #333;
 }
 
 .sidebar .collection-button {
-  display: block;
+  overflow: hidden;
   width: 100%;
-  margin: 0.25rem 0;
-  padding: 0.5rem;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin: 1.5px 0;
+  padding: 0.5rem 1.75em;
+  background: #28363a;
+  border: none;
+  color: inherit;
+  border-radius: 1em;
   cursor: pointer;
   text-align: left;
 }
 
 .sidebar .collection-button:hover {
-  background: #e9ecef;
+  background: #39535a;
 }
 
 .sidebar .title-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 0.75em;
+}
+
+.sidebar .icon-button {
+  background-color: transparent;
+
+  &:hover {
+    background-color: #fff3;
+  }
 }

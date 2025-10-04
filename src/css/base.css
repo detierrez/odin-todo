@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "Quantico";
+  src: url("@fonts/Quantico/Quantico-BoldItalic.woff2") format("woff2"),
+    url("@fonts/Quantico/Quantico-BoldItalic.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
 * {
   transition: background-color 150ms ease-in-out, opacity 150ms ease-in-out;
 }
@@ -11,5 +20,9 @@
 } */
 
 body {
-  background-color: rgb(160, 177, 123);
+  color: white;
+}
+
+html {
+  overflow-y: scroll;
 }

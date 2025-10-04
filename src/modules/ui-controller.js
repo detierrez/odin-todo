@@ -70,7 +70,6 @@ function isProject(collection) {
 }
 
 function getProjectFromTask(taskId) {
-  // const { taskId } = event.currentTarget.dataset;
   return app.getProjectFromTask(taskId);
 }
 

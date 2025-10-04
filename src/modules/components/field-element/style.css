@@ -1,4 +1,5 @@
 .field-element {
+  color: inherit;
   field-sizing: content;
   border: none;
   border-radius: 0.25em;
@@ -9,7 +10,7 @@
   &:focus {
     cursor: text;
     border: none;
-    outline: 1px solid #0006;
+    outline: 1px solid #fff6;
     background-color: #0004;
   }
 
@@ -41,7 +42,7 @@ select.field-element,
 
 select.field-element::picker-icon {
   content: url("@icons/arrow.svg");
-  filter: brightness(0.3);
+  filter: brightness(1);
   height: 24px;
 }
 
