@@ -7,6 +7,9 @@
   }
 
   .add-button {
+    position: fixed;
+    top: 80vh;
+    left: calc(450px + 15vw);
     margin-right: 0.5em;
     margin-bottom: 3em;
     background-color: rgb(73, 119, 73);

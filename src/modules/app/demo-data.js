@@ -95,6 +95,70 @@ const tasks = [
     priority: "Medium",
     isCompleted: false,
   },
+  {
+    id: "t13",
+    title: "Water plants",
+    description: "Water all indoor and outdoor plants",
+    dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+    priority: "Low",
+    isCompleted: false,
+  },
+  {
+    id: "t14",
+    title: "Write blog post",
+    description: "Draft a new post about JavaScript tips",
+    dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+    priority: "Medium",
+    isCompleted: false,
+  },
+  {
+    id: "t15",
+    title: "Grocery shopping",
+    description: "Buy vegetables and snacks",
+    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    priority: "High",
+    isCompleted: false,
+  },
+  {
+    id: "t16",
+    title: "Car maintenance",
+    description: "Change oil and check tire pressure",
+    dueDate: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
+    priority: "Medium",
+    isCompleted: false,
+  },
+  {
+    id: "t17",
+    title: "Pay bills",
+    description: "Electricity and internet bills",
+    dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+    priority: "High",
+    isCompleted: false,
+  },
+  {
+    id: "t18",
+    title: "Team meeting",
+    description: "Weekly sync with the team",
+    dueDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
+    priority: "Medium",
+    isCompleted: false,
+  },
+  {
+    id: "t19",
+    title: "Laundry",
+    description: "Wash and fold clothes",
+    dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+    priority: "Low",
+    isCompleted: false,
+  },
+  {
+    id: "t20",
+    title: "Review pull requests",
+    description: "Check and merge pending PRs",
+    dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+    priority: "High",
+    isCompleted: false,
+  },
 ];
 
 const projects = [
@@ -105,9 +169,8 @@ const projects = [
     ownedTasksIds: [
       "t1",
       "t4",
-      "t5",
-      "t7",
-      "t9",
+      "t13",
+      "t17",
     ],
   },
   {
@@ -117,7 +180,7 @@ const projects = [
     ownedTasksIds: [
       "t2",
       "t10",
-      "t12",
+      "t14",
     ],
   },
   {
@@ -128,6 +191,7 @@ const projects = [
       "t3",
       "t6",
       "t11",
+      "t19",
     ],
   },
   {
@@ -137,6 +201,8 @@ const projects = [
     ownedTasksIds: [
       "t8",
       "t12",
+      "t18",
+      "t20",
     ],
   },
   {
@@ -146,37 +212,19 @@ const projects = [
     ownedTasksIds: [
       "t5",
       "t9",
+      "t15",
+      "t16",
+    ],
+  },
+  {
+    id: "p6",
+    title: "Vacation",
+    description: "Planning and organizing vacation",
+    ownedTasksIds: [
+      "t7",
     ],
   },
 ];
-
-// const projects = [
-//   {
-//     id: "p1",
-//     title: "Personal",
-//     description: "Personal tasks and reminders",
-//     ownedTasksIds: [
-//       "t1",
-//       "t4",
-//       "t5",
-//     ],
-//   },
-//   {
-//     id: "p2",
-//     title: "Learning",
-//     description: "Tasks related to learning and self-improvement",
-//     ownedTasksIds: ["t2"],
-//   },
-//   {
-//     id: "p3",
-//     title: "Health",
-//     description: "Health and wellness related tasks",
-//     ownedTasksIds: [
-//       "t3",
-//       "t6",
-//     ],
-//   },
-// ];
 
 const demoData = { Task: tasks, Project: projects };
 export default demoData;

@@ -1,9 +1,8 @@
 .task-card {
-  font-size: 100%;
-  /* background-color: rgb(21, 96, 99); */
   border: 1px solid #fff4;
   border-radius: 0.3em;
   padding: 0.5em;
+  padding-top: 0.6em;
   user-select: none;
 
   &:hover {
@@ -17,7 +16,7 @@
 
 .task-card {
   display: grid;
-  gap: 0em 0.1em;
+  gap: 0.2em 0.1em;
   justify-content: space-between;
   justify-items: start;
   align-items: center;
@@ -25,20 +24,6 @@
   grid-template-areas:
     "check title date expand delete"
     "expan expan  expan expan   expan";
-
-  transition: grid-template-rows 0.5s ease, background-color 150ms ease-in-out,
-    opacity 150ms ease-in-out, max-height 500ms ease;
-  overflow: hidden;
-
-  grid-template-rows: min-content 0fr 0fr;
-  &.expanded {
-    grid-template-rows: min-content 1fr 1fr;
-    .description,
-    .project-picker {
-      max-height: fit-content;
-      border: 1px solid red;
-    }
-  }
 
   > .check-button {
     grid-area: check;
@@ -68,13 +53,10 @@
   }
 
   .project-picker {
-    grid-area: prjc;
-    opacity: 1;
+    margin-bottom: 0.2em;
   }
+
   .description {
-    grid-area: desc;
-    align-self: start;
-    opacity: 1;
     width: 100%;
   }
 }
@@ -116,4 +98,8 @@
 }
 .task-card .expand-button.rotated > img {
   transform: rotate(90deg);
+}
+
+.task-card .delete-button {
+  padding: 10%;
 }
