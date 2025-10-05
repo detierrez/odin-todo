@@ -6,7 +6,7 @@
     "dev": "webpack serve --open --config webpack.dev.js",
     "prebuild": "git checkout gh-pages && git merge main --no-edit",
     "build": "webpack --config webpack.prod.js",
-    "predeploy": "git checkout gh-pages && git merge main --no-edit && npm run build && git add dist -f && git commit -m 'Deployment commit'",
+    "predeploy": "npm run build && git add dist -f && git commit -m 'Deployment commit'",
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "postdeploy": "git checkout main"
   },
