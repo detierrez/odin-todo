@@ -58,3 +58,7 @@
     z-index: 1;
   }
 }
+
+.collection-view .field-element::placeholder {
+  color: #fffa
+}

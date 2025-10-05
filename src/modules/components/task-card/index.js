@@ -2,6 +2,7 @@ import "./style.css";
 import createDatePicker from "../date-picker";
 import { createIconButton, createTwoSidedIconButton } from "../icon-button";
 import createFieldElement, { createSelect } from "../field-element";
+import createExpandable from "../expandable";
 
 export default function createTaskCard({
   task,
@@ -47,12 +48,6 @@ export default function createTaskCard({
     ...args,
   });
 
-  const expandButton = createIconButton("arrow");
-  expandButton.classList.add("expand-button");
-  expandButton.addEventListener("click", (event) => {
-    taskCard.classList.toggle("expanded");
-  });
-
   const deleteButton = createIconButton("trashBin");
   deleteButton.classList.add("delete-button");
   deleteButton.dataset.taskId = task.id;
@@ -60,9 +55,6 @@ export default function createTaskCard({
     taskCard.remove();
     onDeleteClick(event);
   });
-
-  const collapsableContainer = document.createElement("div");
-  collapsableContainer.classList.add("collapsable");
 
   const projects = getProjects().map((project) => ({
     value: project.id,
@@ -92,15 +84,24 @@ export default function createTaskCard({
     },
   });
 
-  taskCard.append(projectPicker)
-  taskCard.append(description)
+  const { expandable, toggleExpandable } = createExpandable(
+    projectPicker,
+    description
+  );
+
+  const expandButton = createIconButton("arrow");
+  expandButton.classList.add("expand-button");
+  expandButton.addEventListener("click", (event) => {
+    event.currentTarget.classList.toggle("rotated");
+    toggleExpandable();
+  });
 
   taskCard.append(checkButton);
   taskCard.append(title);
   taskCard.append(datePicker);
   taskCard.append(expandButton);
   taskCard.append(deleteButton);
-  // taskCard.append(collapsableContainer)
+  taskCard.append(expandable);
 
   for (const element of taskCard.children) {
     element.addEventListener("click", (event) => {

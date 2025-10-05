@@ -24,26 +24,18 @@
   grid-template-columns: max-content min-content max-content 1fr max-content;
   grid-template-areas:
     "check title date expand delete"
-    "..... prjc  prjc prjc   ......"
-    "..... desc  desc desc   ......";
+    "expan expan  expan expan   expan";
+
   transition: grid-template-rows 0.5s ease, background-color 150ms ease-in-out,
     opacity 150ms ease-in-out, max-height 500ms ease;
   overflow: hidden;
-
-  &:not(.expanded) {
-    .project-picker,
-    .description {
-      pointer-events: none;
-      opacity: 0;
-    }
-  }
 
   grid-template-rows: min-content 0fr 0fr;
   &.expanded {
     grid-template-rows: min-content 1fr 1fr;
     .description,
-    .project-picker  {
-      max-height:fit-content;
+    .project-picker {
+      max-height: fit-content;
       border: 1px solid red;
     }
   }
@@ -70,26 +62,20 @@
     grid-area: delete;
   }
 
-  /* > .collapsable {
-    grid-area: 2 / 1 / -1 / -1;
-
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    flex-direction: column;
-  } */
+  .expandable {
+    grid-area: expan;
+    justify-self: stretch;
+  }
 
   .project-picker {
     grid-area: prjc;
     opacity: 1;
-    max-height: 0;
   }
   .description {
     grid-area: desc;
     align-self: start;
     opacity: 1;
-    min-width: 0px;
-    max-height: 0;
+    width: 100%;
   }
 }
 
@@ -128,6 +114,6 @@
 .task-card .expand-button > img {
   transition: 150ms transform;
 }
-.task-card.expanded .expand-button > img {
+.task-card .expand-button.rotated > img {
   transform: rotate(90deg);
 }
