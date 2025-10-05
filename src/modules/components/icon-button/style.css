@@ -8,6 +8,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  img {
+    vertical-align: top;
+
+    height: 100%;
+  }
 }
 
 .icon-button.two-sided.side-a :nth-child(2) {

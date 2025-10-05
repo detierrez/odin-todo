@@ -71,10 +71,18 @@
   color: #fffa;
 }
 
+.task-card {
+  & .icon-button:not(.check-button) {
+    opacity: 0;
+  }
+
+  &:hover .icon-button:not(.check-button) {
+    opacity: 1;
+  }
+}
+
 .task-card .icon-button {
-  border: none;
   background-color: transparent;
-  opacity: 0;
 
   &:hover {
     background-color: #0006;
@@ -85,12 +93,8 @@
   }
 }
 
-.task-card:hover .icon-button {
-  opacity: 1;
-}
-
-.task-card select {
-  min-width: 7em;
+.task-card .check-button {
+  border-radius: 2px;
 }
 
 .task-card .expand-button > img {

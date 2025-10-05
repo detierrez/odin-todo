@@ -3,7 +3,7 @@ import { Project, Collection } from "./project";
 
 import demoData from "./demo-data";
 
-localStorage.clear();
+// localStorage.clear();
 
 if (localStorage.length === 0) {
   for (const itemClass in demoData) {
