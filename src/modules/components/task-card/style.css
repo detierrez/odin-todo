@@ -14,7 +14,7 @@
   }
 
   &:has(.expanded):not(:hover) {
-    background-color: #4e5a522a;
+    background-color: #4e5a528c;
   }
 }
 
