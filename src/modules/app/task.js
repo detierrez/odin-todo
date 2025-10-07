@@ -29,7 +29,7 @@ export class Task {
     };
   }
 
-  toJSON(key) {
+  toJSON() {
     return { itemClass: this.constructor.name, itemArguments: this.properties };
   }
 }

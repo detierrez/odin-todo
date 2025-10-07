@@ -1,7 +1,7 @@
 import "./style.css";
 import createDatePicker from "../date-picker";
 import { createIconButton, createTwoSidedIconButton } from "../icon-button";
-import createFieldElement, { createCheckbox, createSelect } from "../field-element";
+import createFieldElement, { createSelect } from "../field-element";
 import createExpandable from "../expandable";
 
 export default function createTaskCard({
@@ -18,7 +18,7 @@ export default function createTaskCard({
   taskCard.className = "task-card";
   taskCard.dataset.taskId = task.id;
   taskCard.classList.add(task.isCompleted ? "completed" : "not-completed");
-  taskCard.addEventListener("click", (event) => {});
+  taskCard.addEventListener("click", () => {});
 
   const [iconA, iconB] = task.isCompleted
     ? ["check", "notCheck"]

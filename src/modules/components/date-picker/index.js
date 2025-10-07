@@ -4,8 +4,7 @@ import { format, intlFormatDistance, isToday } from "date-fns";
 export default function createDatePicker({
   taskId,
   date = new Date(),
-  onDateChange,
-  ...args
+  onDateChange
 }) {
   const datePicker = document.createElement("button");
   datePicker.classList.add("date-picker", "field-element");
@@ -38,7 +37,7 @@ export default function createDatePicker({
     }
   });
 
-  datePicker.addEventListener("click", (event) => {
+  datePicker.addEventListener("click", () => {
     dateInput.showPicker();
   });
 

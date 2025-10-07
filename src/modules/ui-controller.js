@@ -54,7 +54,7 @@ function onDeleteClick(event) {
   app.deleteTask(event.currentTarget.dataset.taskId);
 }
 
-function createTaskFromEvent(event) {
+function createTaskFromEvent() {
   const args = { title: "", description: "" };
   const task = app.createTask(args);
 
@@ -73,7 +73,7 @@ function getProjectFromTask(taskId) {
   return app.getProjectFromTask(taskId);
 }
 
-function createProjectFromEvent(event) {
+function createProjectFromEvent() {
   const args = {};
   const project = app.createProject(args);
 

@@ -1,5 +1,5 @@
 import { Task } from "./task";
-import { Project, Collection } from "./project";
+import { Project } from "./project";
 
 import demoData from "./demo-data";
 

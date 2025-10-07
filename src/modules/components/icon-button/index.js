@@ -27,7 +27,7 @@ export function createTwoSidedIconButton(iconNameA, iconNameB) {
   iconButton.append(createIconElement(iconNameB));
   iconButton.classList.add("two-sided", "side-a");
 
-  iconButton.addEventListener("click", (event) => {
+  iconButton.addEventListener("click", () => {
     iconButton.classList.toggle("side-a");
     iconButton.classList.toggle("side-b");
   });

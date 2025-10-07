@@ -67,7 +67,7 @@ export class Project extends Collection {
     this.ownedTasksIds.delete(taskId);
   }
 
-  toJSON(key) {
+  toJSON() {
     const itemArguments = {
       title: this.title,
       description: this.description,
