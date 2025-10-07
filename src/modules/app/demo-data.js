@@ -166,63 +166,37 @@ const projects = [
     id: "p1",
     title: "Personal",
     description: "Personal tasks and reminders",
-    ownedTasksIds: [
-      "t1",
-      "t4",
-      "t13",
-      "t17",
-    ],
+    ownedTasksIds: ["t1", "t4", "t13", "t17"],
   },
   {
     id: "p2",
     title: "Learning",
     description: "Tasks related to learning and self-improvement",
-    ownedTasksIds: [
-      "t2",
-      "t10",
-      "t14",
-    ],
+    ownedTasksIds: ["t2", "t10", "t14"],
   },
   {
     id: "p3",
     title: "Health",
     description: "Health and wellness related tasks",
-    ownedTasksIds: [
-      "t3",
-      "t6",
-      "t11",
-      "t19",
-    ],
+    ownedTasksIds: ["t3", "t6", "t11", "t19"],
   },
   {
     id: "p4",
     title: "Work",
     description: "Professional and career-related tasks",
-    ownedTasksIds: [
-      "t8",
-      "t12",
-      "t18",
-      "t20",
-    ],
+    ownedTasksIds: ["t8", "t12", "t18", "t20"],
   },
   {
     id: "p5",
     title: "Home",
     description: "Household chores and maintenance",
-    ownedTasksIds: [
-      "t5",
-      "t9",
-      "t15",
-      "t16",
-    ],
+    ownedTasksIds: ["t5", "t9", "t15", "t16"],
   },
   {
     id: "p6",
     title: "Vacation",
     description: "Planning and organizing vacation",
-    ownedTasksIds: [
-      "t7",
-    ],
+    ownedTasksIds: ["t7"],
   },
 ];
 

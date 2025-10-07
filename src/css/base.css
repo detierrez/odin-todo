@@ -1,6 +1,7 @@
 @font-face {
   font-family: "Quantico";
-  src: url("@fonts/Quantico/Quantico-BoldItalic.woff2") format("woff2"),
+  src:
+    url("@fonts/Quantico/Quantico-BoldItalic.woff2") format("woff2"),
     url("@fonts/Quantico/Quantico-BoldItalic.woff") format("woff");
   font-weight: bold;
   font-style: italic;
@@ -8,7 +9,9 @@
 }
 
 * {
-  transition: background-color 150ms ease-in-out, opacity 150ms ease-in-out;
+  transition:
+    background-color 150ms ease-in-out,
+    opacity 150ms ease-in-out;
 }
 
 .hidden {

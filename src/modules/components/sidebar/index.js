@@ -1,4 +1,4 @@
-import {createIconButton} from "../icon-button";
+import { createIconButton } from "../icon-button";
 import "./style.css";
 
 export default function createSidebar({
@@ -10,15 +10,15 @@ export default function createSidebar({
   const sidebar = document.createElement("aside");
   sidebar.classList.add("sidebar");
 
-  const pageTitle = document.createElement("h1")
-  pageTitle.innerHTML = "<a href=''>Dew it</a>"
+  const pageTitle = document.createElement("h1");
+  pageTitle.innerHTML = "<a href=''>Dew it</a>";
 
   const collectionsContainer = document.createElement("div");
   collectionsContainer.classList.add("collections-container");
 
   for (const collection of getCollections()) {
     collectionsContainer.append(
-      createCollectionButton(collection, "collection", onCollectionClick)
+      createCollectionButton(collection, "collection", onCollectionClick),
     );
   }
 
@@ -35,11 +35,11 @@ export default function createSidebar({
   projectsContainer.append(titleContainer);
   for (const project of getProjects()) {
     projectsContainer.append(
-      createCollectionButton(project, "project", onCollectionClick)
+      createCollectionButton(project, "project", onCollectionClick),
     );
   }
 
-  sidebar.append(pageTitle)
+  sidebar.append(pageTitle);
   sidebar.appendChild(collectionsContainer);
   sidebar.appendChild(projectsContainer);
 

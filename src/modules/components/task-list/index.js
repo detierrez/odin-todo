@@ -21,7 +21,7 @@ export default function createTaskList({
     addTaskToList(task, taskList, args);
   };
 
-  return {taskList, addTaskOnEvent};
+  return { taskList, addTaskOnEvent };
 }
 
 function addTaskToList(task, taskList, args) {

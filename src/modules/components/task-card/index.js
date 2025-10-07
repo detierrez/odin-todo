@@ -68,7 +68,7 @@ export default function createTaskCard({
       text: "No project",
     },
     projects,
-    selectedValue
+    selectedValue,
   );
   projectPicker.classList.add("project-picker");
   projectPicker.dataset.taskId = task.id;
@@ -86,7 +86,7 @@ export default function createTaskCard({
 
   const { expandable, toggleExpandable } = createExpandable(
     projectPicker,
-    description
+    description,
   );
 
   const expandButton = createIconButton("arrow");

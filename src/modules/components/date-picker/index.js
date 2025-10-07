@@ -4,7 +4,7 @@ import { format, intlFormatDistance, isToday } from "date-fns";
 export default function createDatePicker({
   taskId,
   date = new Date(),
-  onDateChange
+  onDateChange,
 }) {
   const datePicker = document.createElement("button");
   datePicker.classList.add("date-picker", "field-element");

@@ -88,7 +88,7 @@ export class TimeCollection extends Collection {
 
   get tasks() {
     return Task.getAll().filter((task) =>
-      isWithinInterval(task.dueDate, this.timeInterval)
+      isWithinInterval(task.dueDate, this.timeInterval),
     );
   }
 

@@ -51,7 +51,7 @@ export default function createBody({
       onProjectChange,
       ...args,
     });
-    newView.classList.add("main")
+    newView.classList.add("main");
     main.replaceWith(newView);
     main = newView;
   }

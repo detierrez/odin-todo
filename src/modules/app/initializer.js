@@ -10,7 +10,7 @@ if (localStorage.length === 0) {
     for (const itemArguments of demoData[itemClass]) {
       localStorage.setItem(
         itemArguments.id,
-        JSON.stringify({ itemClass, itemArguments })
+        JSON.stringify({ itemClass, itemArguments }),
       );
     }
   }
@@ -21,7 +21,7 @@ if (localStorage.length === 0) {
 let classesToLoad = [Task, Project];
 classesToLoad = classesToLoad.reduce(
   (acc, Class) => ({ ...acc, [Class.name]: Class }),
-  {}
+  {},
 );
 
 const storedItems = Object.values({ ...localStorage });
